@@ -30,13 +30,11 @@ class SliderController extends BaseController
             $sliders = Slider::all();
             return DataTables::of($sliders)
                 ->addIndexColumn()
-                ->addColumn('video', function ($row) {
-                    if ($row->video_url) {
-                        return '<video width="100" height="auto" controls>
-                                    <source src="' . asset($row->video_url) . '" type="video/mp4">
-                                </video>';
+                ->addColumn('image', function ($row) {
+                    if ($row->s_img) {
+                        return '<img src="' . asset($row->s_img) . '" width="80" height="60" style="object-fit:cover; border-radius:4px;">';
                     } else {
-                        return 'No video uploaded';
+                        return 'No image uploaded';
                     }
                 })
                 ->addColumn('action', function ($row) {
@@ -60,7 +58,7 @@ class SliderController extends BaseController
 
                     return $actionbtn;
                 })
-                ->rawColumns(['video', 'action'])
+                ->rawColumns(['image', 'action'])
                 ->make(true);
         }
         return view('admin.pages.slider.index');
@@ -79,28 +77,27 @@ class SliderController extends BaseController
      */
     public function store(Request $request)
     {
-        // Validate incoming data
         $request->validate([
             'caption_text' => 'required|string|max:255',
             'heading_text' => 'required|string|max:255',
-            'video_url'    => 'nullable|mimes:mp4,mov,ogg,qt|max:51200', // max size 50MB
+            's_img'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5000',
         ]);
 
-        // Remove HTML tags from caption and heading
         $request->merge([
             'caption_text' => strip_tags($request->caption_text),
             'heading_text' => strip_tags($request->heading_text),
         ]);
 
-        // Call the model's method to create the slider
         Slider::newSlider($request);
 
-        // Success message and redirect
         $this->toastr->success('Slider created successfully!');
         return redirect()->route('slider.index');
     }
 
-
+      public function show(Slider $slider)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -115,23 +112,19 @@ class SliderController extends BaseController
      */
     public function update(Request $request, Slider $slider)
     {
-        // Validate incoming data
         $request->validate([
             'caption_text' => 'required|string|max:255',
             'heading_text' => 'required|string|max:255',
-            'video_url'    => 'nullable|mimes:mp4,mov,ogg,qt|max:10240', // max size 10MB
+            's_img'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5000',
         ]);
 
-        // Remove HTML tags from caption and heading
         $request->merge([
             'caption_text' => strip_tags($request->caption_text),
             'heading_text' => strip_tags($request->heading_text),
         ]);
 
-        // Call the model's method to update the slider
         Slider::updateSlider($request, $slider->id);
 
-        // Success message and redirect
         $this->toastr->success('Slider updated successfully!');
         return redirect()->route('slider.index');
     }
@@ -141,13 +134,10 @@ class SliderController extends BaseController
      */
     public function destroy($id)
     {
-        // Fetch the slider record to delete
         $slider = Slider::findOrFail($id);
 
-        // Call the model's method to delete the slider
         Slider::deleteSlider($slider);
 
-        // Success message and redirect
         $this->toastr->success('Slider deleted successfully!');
         return redirect()->route('slider.index');
     }

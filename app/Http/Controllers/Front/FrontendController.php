@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
     public function index() {
-        $sliders = Slider::all();
+        $slds = Slider::all();
         $top_viewed_categories = Category::orderBy('view_count', 'DESC')
                                 ->limit(6)
                                 ->get();
@@ -62,7 +62,7 @@ class FrontendController extends Controller
         // Home Page Category
         $home_category = Category::where('home_page',1)->orderBy('category_name', 'DESC')->get();
          $settings=Setting::all();
-        return view('frontend.pages.index', compact('sliders','settings','top_viewed_categories','trendy_product_new', 'brands', 'top_rated_products', 'bannerproduct', 'featured', 'popular_product', 'trendy_product','today_deal', 'home_category'));
+        return view('frontend.pages.index', compact('slds','settings','top_viewed_categories','trendy_product_new', 'brands', 'top_rated_products', 'bannerproduct', 'featured', 'popular_product', 'trendy_product','today_deal', 'home_category'));
     }
 
     private function calculateAndSortRatings($products) {

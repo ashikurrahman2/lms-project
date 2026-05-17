@@ -41,7 +41,7 @@
                                         <th>SL</th>
                                         <th>Heading Text</th>
                                         <th>Caption Text</th>
-                                        <th>Video</th>
+                                        <th>Slider Image</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -53,7 +53,7 @@
                                         <th>SL</th>
                                         <th>Heading Text</th>
                                         <th>Caption Text</th>
-                                        <th>Video</th>
+                                        <th>Slider Image</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -89,11 +89,10 @@
                         <input type="text" class="form-control" id="caption_text" name="caption_text" required>
                         <small id="emailHelp" class="form-text text-muted">This is your Slider Caption Text</small>
                     </div>
-
-                    <div class="form-group">
-                        <label for="video_url" class="col-form-label pt-0">Video URL<sup class="text-size-20 top-1">*</sup></label>
-                        <input type="file" class="form-control" name="video_url" accept="video/*">
-                        <small id="videoHelp" class="form-text text-muted">Upload a video file (mp4, mov, ogg, qt)</small>
+                        <div class="col-md-12">
+                        <label for="s_img" class="col-form-label pt-0">Slider Image<sup class="text-size-20 top-1">*</sup></label>
+                        <input type="file" class="dropify" data-height="200" name="s_img"  required />
+                        <small id="imageHelp" class="form-text text-muted">This is your Banner image</small>
                     </div>
 
                     <div class="modal-footer">
@@ -132,7 +131,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'heading_text', name: 'heading_text' },
                 { data: 'caption_text', name: 'caption_text' },
-                { data: 'video_url', name: 'video_url' },
+                { data: 's_img', name: 's_img' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });

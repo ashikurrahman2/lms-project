@@ -6996,10 +6996,10 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $heading_text
      * @property string $caption_text
-     * @property string $video_url
+     * @property string|null $s_img
      * @property int $id
      * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereVideoUrl($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereSImg($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereCaptionText($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereHeadingText($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Slider>|Slider whereCreatedAt($value)

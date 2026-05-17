@@ -4,75 +4,74 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class Slider extends Model
 {
     use HasFactory;
 
-    private static $video, $videoName, $directory, $videoUrl;
+    private static $imageUrl;
+    private static $directory = "upload/slider-images/";
 
-    // Fillable fields to allow mass assignment
     protected $fillable = [
-        'video_url',
+        's_img',
         'caption_text',
         'heading_text',
     ];
 
-    // Function to upload and store video
-
-    private static function getVideoUrl($request)
+    // Function to upload and store image
+    private static function getImageUrl($imageFile)
     {
-        self::$video = $request->file('video_url');
-        if (self::$video) {
-            // Use the original filename without modifying it
-            self::$videoName = self::$video->getClientOriginalName();  // Retain the original video name
-
-            // Define the directory where the video will be stored
-            self::$directory = "upload/slider-videos/";
-
-            // Store the video in the specified directory
-            self::$video->move(self::$directory, self::$videoName);
-
-            // Construct the video URL
-            self::$videoUrl = self::$directory . self::$videoName;
-
-            // Return the URL
-            return self::$videoUrl;
+        // Directory না থাকলে automatic create করবে
+        if (!file_exists(self::$directory)) {
+            mkdir(self::$directory, 0777, true);
         }
-        return null;
+
+        $imageName    = hexdec(uniqid()) . '.' . $imageFile->getClientOriginalExtension();
+        $imageFile->move(self::$directory, $imageName);
+
+        // Resize image
+        $imageManager = new ImageManager(new Driver());
+        $image        = $imageManager->read(self::$directory . $imageName);
+        $image->resize(500, 500);
+        $image->save(self::$directory . $imageName);
+
+        return self::$directory . $imageName;
     }
 
     // Create a new Slider entry
     public static function newSlider($request)
     {
-        self::$videoUrl = $request->file('video_url') ? self::getVideoUrl($request) : '';
+        self::$imageUrl = $request->hasFile('s_img')
+            ? self::getImageUrl($request->file('s_img'))
+            : null;
 
         $slider = new self();
-        self::saveSliderInfo($slider, $request, self::$videoUrl);
+        self::saveSliderInfo($slider, $request, self::$imageUrl);
     }
 
     // Update an existing Slider entry
     public static function updateSlider($request, $id)
     {
-        // Fetch the slider record using the ID
         $slider = self::findOrFail($id);
 
-        if ($request->file('video_url')) {
-            if (file_exists($slider->video_url)) {
-                unlink($slider->video_url); // Delete the old video if it exists
+        if ($request->hasFile('s_img')) {
+            if ($slider->s_img && file_exists($slider->s_img)) {
+                unlink($slider->s_img);
             }
-            self::$videoUrl = self::getVideoUrl($request);
+            self::$imageUrl = self::getImageUrl($request->file('s_img'));
         } else {
-            self::$videoUrl = $slider->video_url;
+            self::$imageUrl = $slider->s_img;
         }
 
-        self::saveSliderInfo($slider, $request, self::$videoUrl);
+        self::saveSliderInfo($slider, $request, self::$imageUrl);
     }
 
     // Save or update slider info in the database
-    private static function saveSliderInfo($slider, $request, $videoUrl)
+    private static function saveSliderInfo($slider, $request, $imageUrl)
     {
-        $slider->video_url   = $videoUrl;
+        $slider->s_img        = $imageUrl;
         $slider->caption_text = $request->caption_text;
         $slider->heading_text = $request->heading_text;
         $slider->save();
@@ -81,10 +80,10 @@ class Slider extends Model
     // Delete a Slider entry
     public static function deleteSlider($slider)
     {
-        if (file_exists($slider->video_url)) {
-            unlink($slider->video_url); // Delete the video file
+        if ($slider->s_img && file_exists($slider->s_img)) {
+            unlink($slider->s_img);
         }
 
-        $slider->delete(); // Delete the slider record from the database
+        $slider->delete();
     }
 }
