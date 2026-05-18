@@ -37,7 +37,8 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Heading</th>
-                                        <th>Subheading</th>
+                                         <th>Paragraph 1</th>
+                                        <th>Paragraph 2</th>
                                         <th>Image</th>
                                         <th>Action</th>
                                     </tr>
@@ -47,7 +48,8 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Heading</th>
-                                        <th>Subheading</th>
+                                        <th>Paragraph 1</th>
+                                        <th>Paragraph 2</th>
                                         <th>Image</th>
                                         <th>Action</th>
                                     </tr>
@@ -72,10 +74,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-group mb-3">
-                    <label>Subheading</label>
-                    <input type="text" name="subheading" class="form-control" required>
-                </div>
-                <div class="form-group mb-3">
                     <label>Heading</label>
                     <input type="text" name="heading" class="form-control" required>
                 </div>
@@ -89,7 +87,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label>About Image</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="dropify" accept="image/*" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -125,7 +123,8 @@ $(function () {
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'heading', name: 'heading' },
-            { data: 'subheading', name: 'subheading' },
+            { data: 'paragraph_1', name: 'paragraph_1' },
+            { data: 'paragraph_2', name: 'paragraph_2' },
             { data: 'image', name: 'image' },
             {
                 data: 'action',
@@ -136,99 +135,17 @@ $(function () {
         ]
     });
 
-    // Load Edit Modal
+   // Load edit form
     $('body').on('click', '.edit', function () {
         let id = $(this).data('id');
-        $.get("{{ url('admin/about') }}/" + id + "/edit", function (data) {
+        $.get("about/" + id + "/edit", function (data) {
             $('#edit-form-body').html(data);
-            $('#editModal').modal('show');
         });
     });
 
-    // Submit Edit Form
-$(document).on('submit', '#edit-form', function (e) {
-    e.preventDefault();
-    var form = $(this)[0];
-    var formData = new FormData(form); // ✅ FormData নেওয়া হয়েছে
-    var url = $(this).attr('action');
 
-    $.ajax({
-        url: url,
-        type: 'POST', // PUT এর বদলে POST
-        data: formData,
-        contentType: false,
-        processData: false,
-        headers: {
-            'X-HTTP-Method-Override': 'PUT' // Laravel এ PUT simulate করা
-        },
-        success: function (data) {
-            if (data.success) {
-                toastr.success(data.message);
-                $('#editModal').modal('hide');
-                $('.ytable').DataTable().ajax.reload();
-            }
-        },
-        error: function () {
-            toastr.error('Something went wrong.');
-        }
-    });
-});
 
-    // Submit Add Form
-    $('#add-form').submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: $(this).attr('action'),
-            method: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                toastr.success(data.message);
-                $('#add-form')[0].reset();
-                $('#addModal').modal('hide');
-                table.ajax.reload();
-            },
-            error: function () {
-                toastr.error('Insert failed. Check your inputs.');
-            }
-        });
-    });
-
-    // Delete Item
-    $(document).on('click', '.delete', function (e) {
-        e.preventDefault();
-        var id = $(this).data('id');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This content will be permanently deleted!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('admin/about') }}/" + id,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            table.ajax.reload();
-                            toastr.success(response.message);
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Delete failed. Try again.');
-                    }
-                });
-            }
-        });
-    });
+ 
 });
 </script>
 @endsection

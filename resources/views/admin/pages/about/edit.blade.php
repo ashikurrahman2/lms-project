@@ -3,12 +3,6 @@
     @method('PUT')
     <div class="modal-body">
         <div class="form-group">
-            <label for="subheading" class="col-form-label pt-0">Subheading<sup class="text-size-20 top-1">*</sup></label>
-            <input type="text" class="form-control" id="subheading" name="subheading" value="{{ $about->subheading }}" required>
-            <small class="form-text text-muted">This is your About Subheading </small>
-        </div>
-
-        <div class="form-group">
             <label for="heading" class="col-form-label pt-0">Heading<sup class="text-size-20 top-1">*</sup></label>
             <input type="text" class="form-control" id="heading" name="heading" value="{{ $about->heading }}" required>
             <small class="form-text text-muted">This is your About Heading</small>
@@ -35,7 +29,7 @@
 
         <div class="form-group">
             <label for="image" class="col-form-label pt-0">Upload New Image (Optional)</label>
-            <input type="file" class="form-control" name="image" accept="image/*">
+            <input type="file" class="dropify" name="image" accept="image/*">
             <small class="form-text text-muted">You can upload a new image (Optional)</small>
         </div>
 

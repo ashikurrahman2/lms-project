@@ -61,7 +61,6 @@ class AboutController extends BaseController
     {
         $request->validate([
             'heading'      => 'required|string|max:255',
-            'subheading'   => 'required|string|max:255',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'paragraph_1'  => 'required|string',
             'paragraph_2'  => 'required|string',
@@ -79,15 +78,14 @@ class AboutController extends BaseController
     {
         $request->validate([
             'heading'      => 'required|string|max:255',
-            'subheading'   => 'required|string|max:255',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'paragraph_1'  => 'required|string',
             'paragraph_2'  => 'required|string',
         ]);
 
         About::updateAbout($request, $id);
-        // $this->toastr->success('About info updated successfully!');
-        return response()->json(['success' => true,'message' => 'About info updated successfully!']);
+        $this->toastr->success('About info updated successfully!');
+       return back();
 
     }
 
@@ -95,6 +93,7 @@ class AboutController extends BaseController
     {
         $about = About::findOrFail($id);
         About::deleteAbout($about);
-        return response()->json(['success' => true, 'message' => 'About info deleted successfully!']);
+        $this->toastr->success('About info deleted successfully!');
+        return back();
     }
 }

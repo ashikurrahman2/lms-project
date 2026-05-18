@@ -16,7 +16,6 @@ class About extends Model
     protected $fillable = [
         'image',
         'heading',
-        'subheading',
         'paragraph_1',
         'paragraph_2',
     ];
@@ -71,7 +70,6 @@ class About extends Model
     {
         $about->image        = $imageUrl;
         $about->heading      = $request->heading;
-        $about->subheading   = $request->subheading;
         $about->paragraph_1  = $request->paragraph_1;
         $about->paragraph_2  = $request->paragraph_2;
         $about->save();

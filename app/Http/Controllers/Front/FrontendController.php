@@ -11,8 +11,6 @@ use App\Models\ContactMessage;
 use App\Models\Childcategory;
 use App\Models\Product;
 use App\Models\Slider;
-use App\Models\review;
-use App\Models\Setting;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Wishlist;
@@ -22,47 +20,15 @@ class FrontendController extends Controller
 {
     public function index() {
         $slds = Slider::all();
-        $top_viewed_categories = Category::orderBy('view_count', 'DESC')
-                                ->limit(6)
-                                ->get();
-        foreach ($top_viewed_categories as $category) {
-            $category->increment('view_count');
-        }
-        $brands = Brand::inRandomOrder()->where('front_page', 1)->limit(12)->get();
-        $bannerproduct = Product::where('status', 1)->where('product_slider', 1)->latest()->first();
-
-        // Fetch and sort featured products by rating
-        $featured = Product::where('status', 1)->where('featured', 1)->orderBy('id', 'DESC')->limit(16)->get();
-        $this->calculateAndSortRatings($featured);
-
-        $today_deal = Product::where('status', 1)
-            ->where('today_deal', 1)
-            ->orderBy('id', 'DESC')
-            ->first();
-
-        if ($today_deal) {
-            $today_deal->countdown_time = Carbon::parse($today_deal->updated_at)->addDays(4)->format('Y/m/d H:i:s');
-        }
-        // Fetch and sort popular products by rating
-        $popular_product = Product::where('status', 1)->orderBy('product_views', 'DESC')->limit(16)->get();
-        $this->calculateAndSortRatings($popular_product);
-
-        // Fetch and sort trendy products by rating
-        $trendy_product = Product::where('status', 1)->where('trendy_product', 1)->orderBy('id', 'DESC')->limit(16)->get();
-        $this->calculateAndSortRatings($trendy_product);
-        $trendy_product_new=Product::where('status', 1)->where('trendy_product', 1)->orderBy('id', 'DESC')->with('childcategory')->first();
-        // Fetch and sort top-rated products
-        $top_rated_products = Product::select('products.*')
-            ->leftJoin(DB::raw('(SELECT product_id, MAX(rating) as highest_rating FROM reviews GROUP BY product_id) as reviews'), 'products.id', '=', 'reviews.product_id')
-            ->orderBy('reviews.highest_rating', 'DESC')
-            ->limit(10)
-            ->get();
-        $this->calculateAndSortRatings($top_rated_products);
-
+         $ats= About::all();
         // Home Page Category
         $home_category = Category::where('home_page',1)->orderBy('category_name', 'DESC')->get();
-         $settings=Setting::all();
-        return view('frontend.pages.index', compact('slds','settings','top_viewed_categories','trendy_product_new', 'brands', 'top_rated_products', 'bannerproduct', 'featured', 'popular_product', 'trendy_product','today_deal', 'home_category'));
+        return view('frontend.pages.index', compact('slds','ats','home_category'));
+    }
+    // About page
+    public function About(){
+        $ats= About::all();
+        return view('frontend.pages.about', compact('ats'));
     }
 
     private function calculateAndSortRatings($products) {
@@ -277,13 +243,6 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.new');
     }
-    // About page
-    public function About()
-    {
-      
-        return view('frontend.pages.about');
-    }
-
     public function Courses()
     {
         return view('frontend.pages.courses');
