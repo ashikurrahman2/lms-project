@@ -448,104 +448,46 @@ html, body {
 
 <div class="container-xxl py-5">
     <div class="container">
-
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h6 class="section-title bg-white text-center text-primary px-3">
-                Students
-            </h6>
-
+            <h6 class="section-title bg-white text-center text-primary px-3">Students</h6>
             <h1 class="mb-5">Our Successful Students</h1>
         </div>
 
         <div class="row g-4">
-
-            <!-- Student 1 -->
-            <div class="col-lg-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.1s">
-
+            @foreach ($stds as $index => $student)
+            <div class="col-lg-3 col-md-6 d-flex wow fadeInUp" 
+                 data-wow-delay="{{ $loop->index * 0.2 }}s">
                 <div class="team-item bg-light w-100">
-
                     <div class="overflow-hidden">
-
-                        <img class="img-fluid"
-                             src="{{ asset('frontend/assets/img/photo-1535713875002-d1d0cf377fde.avif')}}"
-                             alt="">
-
+                        <img class="img-fluid" 
+                             src="{{ asset($student->image) }}" 
+                             alt="{{ $student->name }}">
                     </div>
 
                     <div class="position-relative d-flex justify-content-center"
                          style="margin-top: -23px; z-index: 1;">
-
                         <div class="bg-light d-flex justify-content-center pt-2 px-1">
-
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
+                            @if($student->facebook)
+                            <a class="btn btn-sm-square btn-primary mx-1" href="{{ $student->facebook }}" target="_blank">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
+                            @endif
 
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
-                                <i class="fab fa-twitter"></i>
+                            @if($student->linkedin)
+                            <a class="btn btn-sm-square btn-primary mx-1" href="{{ $student->linkedin }}" target="_blank">
+                                <i class="fab fa-linkedin"></i>
                             </a>
-
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-
+                            @endif
                         </div>
                     </div>
 
                     <div class="text-center p-4">
-
-                        <h5 class="mb-0">shobuj</h5>
-
-                        <small>STU20260001</small>
-
+                        <h5 class="mb-0">{{ $student->name }}</h5>
+                        <small>{{ $student->student_id }}</small>
                     </div>
-
                 </div>
             </div>
-
-            <!-- Student 2 -->
-            <div class="col-lg-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.3s">
-
-                <div class="team-item bg-light w-100">
-
-                    <div class="overflow-hidden">
-
-                        <img class="img-fluid"
-                             src="{{ asset('frontend/assets/img/1771866570_699c89caa6b0f.jpg')}}"
-                             alt="">
-
-                    </div>
-
-                    <div class="position-relative d-flex justify-content-center"
-                         style="margin-top: -23px; z-index: 1;">
-
-                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
-
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-
-                            <a class="btn btn-sm-square btn-primary mx-1" href="">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                    <div class="text-center p-4">
-
-                        <h5 class="mb-0">FARID HASAN</h5>
-
-                        <small>STU20260002</small>
-
-                    </div>
-
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

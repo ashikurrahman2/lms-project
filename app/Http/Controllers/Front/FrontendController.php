@@ -7,8 +7,10 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\About;
+use App\Models\Teacher;
 use App\Models\ContactMessage;
 use App\Models\Childcategory;
+use App\Models\Student;
 use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +23,11 @@ class FrontendController extends Controller
     public function index() {
         $slds = Slider::all();
          $ats= About::all();
+         $stds= Student::all();
+         $trs= Teacher::all();
         // Home Page Category
         $home_category = Category::where('home_page',1)->orderBy('category_name', 'DESC')->get();
-        return view('frontend.pages.index', compact('slds','ats','home_category'));
+        return view('frontend.pages.index', compact('slds','ats', 'trs','stds','home_category'));
     }
     // About page
     public function About(){

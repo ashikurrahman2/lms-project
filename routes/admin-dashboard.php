@@ -15,8 +15,10 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\FactController;
@@ -87,6 +89,8 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
     Route::resource('slider', SliderController::class);
     Route::resource('feature', FeatureController::class);
     Route::resource('about', AboutController::class);
+    Route::resource('student', StudentController::class);
+    Route::resource('teacher', TeacherController::class);
 
     Route::resource('fact', FactController::class);
     Route::resource('service', ServiceController::class);

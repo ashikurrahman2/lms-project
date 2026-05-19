@@ -63,9 +63,10 @@
                         @can('view contact_messages')
                             <li class="pc-item"><a class="pc-link" href="{{ route('contactus.index') }}">Contact US</a></li>
                         @endcan
-                        @can('view faq')
-                            <li class="pc-item"><a class="pc-link" href="{{ route('faq.index') }}">FAQ</a></li>
-                        @endcan
+                      
+                            <li class="pc-item"><a class="pc-link" href="{{ route('student.index') }}">Student</a></li>
+                            <li class="pc-item"><a class="pc-link" href="{{ route('teacher.index') }}">Teacher</a></li>
+                      
                     </ul>
                 </li>
                 <li class="pc-item pc-hasmenu">
