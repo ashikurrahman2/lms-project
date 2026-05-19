@@ -42,6 +42,7 @@ Route::group([], function () {
     Route::get('/about', [FrontendController::class, 'About'])->name('about');
     Route::get('/courses', [FrontendController::class, 'Courses'])->name('courses');
     Route::get('/category', [FrontendController::class, 'Category'])->name('category');
+    Route::get('/student', [FrontendController::class, 'STD'])->name('std');
     Route::get('/gallery', [FrontendController::class, 'Gallery'])->name('gal');
     Route::get('/leadership', [FrontendController::class, 'Leadership'])->name('leadership');
     Route::get('/teachers', [FrontendController::class, 'Teachers'])->name('teachers');

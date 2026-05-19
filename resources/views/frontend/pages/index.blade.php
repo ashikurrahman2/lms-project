@@ -494,157 +494,40 @@ html, body {
 
 <!-- Student End -->
 
-    <!-- Teacher Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
-                <h1 class="mb-5">Our Expert Teachers</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/teacher_1768809681_696de4d1843fd.png')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">MD. SHOBUJ AHMED</h5>
-                            <small>CEO CAD & CAM Design Specialist</small>
+<!-- Teacher Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
+            <h1 class="mb-5">Our Expert Teachers</h1>
+        </div>
+        <div class="row g-4">
+            @foreach ($trs as $teacher)
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item bg-light">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid"
+                            src="{{ asset($teacher->t_img) }}"
+                            alt="{{ $teacher->t_name }}">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/teacher_1768966125_697047ed1f56c.jpeg')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Raiyan Rahman</h5>
-                            <small>Trainer Tool & Technology Institute (TTI) BITAC Dhaka (ASSET Project).</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/teacher_1769220318_697428de389f4.jpeg')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Yousuf Khan Onik</h5>
-                            <small>CAD & CAM Design Specialist</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/teacher_1770261699_69840cc36de24.png')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Shariyar Ahmed Rifat</h5>
-                            <small>CAD Design Specialist</small>
-                        </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">{{ $teacher->t_name }}</h5>
+                        <small>{{ $teacher->t_design }}</small>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
-    <!-- Teacher End -->
-
-        <!-- Leadership Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Leadership</h6>
-                <h1 class="mb-5">Our Leadership</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/teacher_1768809681_696de4d1843fd.png')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">MD. SHOBUJ AHMED</h5>
-                            <small>CEO CAD & CAM Design Specialist</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/leader_1768755435_696d10eb3e21f.jpeg')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Eshrat Jahan Esha.</h5>
-                            <small>Managing Director</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('frontend/assets/img/leader_1771042608_698ff730a866b.jpg')}}" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Dr. A K M Shaiful Islam</h5>
-                            <small>Advisor</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Leadership End -->
+</div>
+<!-- Teacher End -->
 
 
     {{-- Our Training Gallery Start --}}
@@ -665,12 +548,6 @@ html, body {
                     </div>
                     <div class="card-info">
                         <h5 class="card-name">MD. SHOBUJ AHMED</h5>
-                        <p class="card-role">CEO, CAD & CAM Design Specialist</p>
-                        <div class="card-socials">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
                     </div>
                 </div>
 
@@ -680,12 +557,7 @@ html, body {
                     </div>
                     <div class="card-info">
                         <h5 class="card-name">Raiyan Rahman</h5>
-                        <p class="card-role">Trainer, Tool & Technology Institute (TTI) BITAC Dhaka</p>
-                        <div class="card-socials">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
+                
                     </div>
                 </div>
 
@@ -695,12 +567,7 @@ html, body {
                     </div>
                     <div class="card-info">
                         <h5 class="card-name">Yousuf Khan Onik</h5>
-                        <p class="card-role">CAD & CAM Design Specialist</p>
-                        <div class="card-socials">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
+                
                     </div>
                 </div>
 
@@ -710,12 +577,7 @@ html, body {
                     </div>
                     <div class="card-info">
                         <h5 class="card-name">Shariyar Ahmed Rifat</h5>
-                        <p class="card-role">CAD Design Specialist</p>
-                        <div class="card-socials">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
+                  
                     </div>
                 </div>
 
@@ -726,9 +588,16 @@ html, body {
                 <button class="nav-btn" id="galleryPrev" aria-label="Previous">
                     <i class="fa fa-arrow-left"></i>
                 </button>
+                <div class="vg3d-dots" id="vg3dDots"></div>
                 <button class="nav-btn" id="galleryNext" aria-label="Next">
                     <i class="fa fa-arrow-right"></i>
                 </button>
+            </div>
+            <!-- View More Button -->
+            <div class="text-center mt-4">
+                <a href="{{ route('gal') }}" class="btn btn-primary py-2 px-4">
+                    View More <i class="fa fa-arrow-right ms-2"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -755,6 +624,119 @@ html, body {
     </div>
 </div>
 
+<script>
+    // গ্যালারি কার্ডের ডেটা
+const galleryData = [
+    {
+        img: "{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png') }}",
+        name: "MD. SHOBUJ AHMED",
+        role: "Instructor"
+    },
+    {
+        img: "{{ asset('frontend/assets/img/gallery_1768881663_696efdffec162.jpg') }}",
+        name: "Raiyan Rahman",
+        role: "Instructor"
+    },
+    {
+        img: "{{ asset('frontend/assets/img/gallery_1768896393_696f37899525d.jpg') }}",
+        name: "Yousuf Khan Onik",
+        role: "Instructor"
+    },
+    {
+        img: "{{ asset('frontend/assets/img/gallery_1768881578_696efdaabcaa9.jpg') }}",
+        name: "Shariyar Ahmed Rifat",
+        role: "Instructor"
+    }
+];
+
+// Modal open/close logic
+document.querySelectorAll('.gallery-card').forEach((card, index) => {
+    card.querySelector('.card-img-wrap').addEventListener('click', function () {
+        const data = galleryData[index];
+        document.getElementById('modalImg').src = data.img;
+        document.getElementById('modalImg').alt = data.name;
+        document.getElementById('modalName').textContent = data.name;
+        document.getElementById('modalRole').textContent = data.role;
+        document.getElementById('teacherModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+// Close button
+document.getElementById('modalClose').addEventListener('click', closeModal);
+
+// Overlay click এ বন্ধ হবে
+document.getElementById('teacherModal').addEventListener('click', function (e) {
+    if (e.target === this) closeModal();
+});
+
+// ESC key এ বন্ধ হবে
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+function closeModal() {
+    document.getElementById('teacherModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+</script>
+<style>
+    .teacher-modal-overlay {
+    display: none; /* বা visibility: hidden */
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.teacher-modal-overlay.active {
+    display: flex; /* active হলে দেখাবে */
+}
+</style>
+<!-- Leadership Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Leadership</h6>
+            <h1 class="mb-5">Our Leadership</h1>
+        </div>
+        <div class="row g-4">
+            @foreach($leaderships as $leadership)
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item bg-light">
+                    {{-- Fixed image container --}}
+                    <div style="width: 100%; height: 280px; overflow: hidden;">
+                        <img src="{{ asset($leadership->l_img) }}"
+                             alt="{{ $leadership->l_name }}"
+                             style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            @if($leadership->l_fc)
+                            <a class="btn btn-sm-square btn-primary mx-1" href="{{ $leadership->l_fc }}" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            @endif
+                            @if($leadership->l_ldn)
+                            <a class="btn btn-sm-square btn-primary mx-1" href="{{ $leadership->l_ldn }}" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">{{ $leadership->l_name }}</h5>
+                        <small>{{ $leadership->l_desg }}</small>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+<!-- Leadership End -->
 
 {{-- 3D Video Training Gallery Start --}}
 <section class="vg3d-section">

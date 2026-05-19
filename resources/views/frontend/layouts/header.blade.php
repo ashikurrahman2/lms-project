@@ -12,7 +12,7 @@
                 <a href="/" class="nav-item nav-link active">Home</a>
                 <a href="{{route('about')}}" class="nav-item nav-link">About</a>
                 <a href="{{route('courses')}}" class="nav-item nav-link">Courses</a>
-                <a href="{{route('category')}}" class="nav-item nav-link">Students</a>
+                <a href="{{route('std')}}" class="nav-item nav-link">Students</a>
                 <a href="{{route('gal')}}" class="nav-item nav-link">Gallery</a> 
                 <a href="{{route('teachers')}}" class="nav-item nav-link">Teachers</a>
                 <a href="{{route('leadership')}}" class="nav-item nav-link">Leadership</a>

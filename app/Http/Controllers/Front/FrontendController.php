@@ -9,6 +9,7 @@ use App\Models\Subcategory;
 use App\Models\About;
 use App\Models\Teacher;
 use App\Models\ContactMessage;
+use App\Models\Leadership;
 use App\Models\Childcategory;
 use App\Models\Student;
 use App\Models\Product;
@@ -25,14 +26,33 @@ class FrontendController extends Controller
          $ats= About::all();
          $stds= Student::all();
          $trs= Teacher::all();
+         $leaderships = Leadership::latest()->get();
         // Home Page Category
         $home_category = Category::where('home_page',1)->orderBy('category_name', 'DESC')->get();
-        return view('frontend.pages.index', compact('slds','ats', 'trs','stds','home_category'));
+        return view('frontend.pages.index', compact('slds','leaderships','ats', 'trs','stds','home_category'));
     }
     // About page
     public function About(){
         $ats= About::all();
         return view('frontend.pages.about', compact('ats'));
+    }
+
+        // Student page
+    public function STD(){
+        $stds= Student::all();
+        return view('frontend.pages.student', compact('stds'));
+    }
+
+        // Teacher page
+    public function Teachers(){
+        $trs= Teacher::all();
+        return view('frontend.pages.teachers', compact('trs'));
+    }
+
+            // Leadership page
+    public function Leadership(){
+        $leaderships= leadership::all();
+        return view('frontend.pages.leader', compact('leaderships'));
     }
 
     private function calculateAndSortRatings($products) {
@@ -261,15 +281,7 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.gallary');
     }
-    public function Leadership()
-    {
-        return view('frontend.pages.leader');
-    }
-    public function Teachers()
-    {
-        return view('frontend.pages.teachers');
-    }
-
+ 
 
       // Contact page
     public function Contact()

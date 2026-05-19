@@ -21,7 +21,7 @@
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Office</h5>
-                            <p class="mb-0">123 Street, New York, USA</p>
+                            <p class="mb-0">{{ $setting->address }}</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-3">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Mobile</h5>
-                            <p class="mb-0">+012 345 67890</p>
+                            <p class="mb-0">{{ $setting->phone_one }}</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Email</h5>
-                            <p class="mb-0">info@example.com</p>
+                            <p class="mb-0">{{ $setting->main_email }}</p>
                         </div>
                     </div>
                 </div>

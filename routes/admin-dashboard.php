@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CampaingController;
 use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\ChildcategorieController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\PickupController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategorieController;
@@ -91,6 +92,7 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
     Route::resource('about', AboutController::class);
     Route::resource('student', StudentController::class);
     Route::resource('teacher', TeacherController::class);
+    Route::resource('leadership', LeadershipController::class);
 
     Route::resource('fact', FactController::class);
     Route::resource('service', ServiceController::class);

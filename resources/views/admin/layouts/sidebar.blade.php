@@ -66,6 +66,7 @@
                       
                             <li class="pc-item"><a class="pc-link" href="{{ route('student.index') }}">Student</a></li>
                             <li class="pc-item"><a class="pc-link" href="{{ route('teacher.index') }}">Teacher</a></li>
+                            <li class="pc-item"><a class="pc-link" href="{{ route('leadership.index') }}">Leadership</a></li>
                       
                     </ul>
                 </li>
