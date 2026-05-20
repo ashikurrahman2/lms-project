@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Frontend Controllers
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\FrontendController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\ReviewController;
 use App\Http\Controllers\Front\CompareController;
@@ -47,7 +48,15 @@ Route::group([], function () {
     Route::get('/leadership', [FrontendController::class, 'Leadership'])->name('leadership');
     Route::get('/teachers', [FrontendController::class, 'Teachers'])->name('teachers');
     Route::get('/contact', [FrontendController::class, 'Contact'])->name('contact');
-
+  /*
+|--------------------------------------------------------------------------
+| Location API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/divisions', [LocationController::class, 'divisions']);
+Route::get('/districts/{division}', [LocationController::class, 'districts']);
+Route::get('/upazilas/{district}', [LocationController::class, 'upazilas']);
+Route::get('/unions/{upazila}', [LocationController::class, 'unions']);
     // Product Details
     Route::get('/products/{slug}', [FrontendController::class, 'product_details'])->name('product.details');
     Route::get('/product-quick-view/{id}', [FrontendController::class, 'productQuickView']);

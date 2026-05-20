@@ -1,93 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
     <title>Login</title>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{{ asset('/') }}frontend/assets/css/custom-style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="left-side">
-        <!--<h2 class="logo"><i class="bx bxl-xing"></i> </h2>-->
-        <div style="display: flex; align-items: center; margin-top: 30px;">
-            <i class="bx bxl-xing" style="font-size: 32px;"></i>
-            <img src="{{ $setting->logo }}" alt="Logo" style="height: 50px; width: auto;" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-blue-50 to-purple-100">
+
+<!-- Background -->
+<div class="absolute top-10 left-10 w-72 h-72 bg-blue-300 rounded-full blur-3xl opacity-30"></div>
+<div class="absolute bottom-10 right-10 w-72 h-72 bg-purple-300 rounded-full blur-3xl opacity-30"></div>
+
+<!-- Card -->
+<div class="relative w-full max-w-md bg-white shadow-2xl rounded-3xl p-10">
+
+    <h1 class="text-3xl font-bold text-center text-gray-800">
+        Login
+    </h1>
+
+    <p class="text-center text-gray-500 mt-2 mb-6">
+        Welcome back 👋
+    </p>
+
+    <!-- Errors -->
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-600 p-3 rounded-xl mb-5 text-sm">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-        <div class="text-left-side" style="margin-top: 20px;">
-        <h2>Welcome! <br /><span style="font-size: 30px;">To Our </span> {{$seo->meta_title}}</h2>
-        <p>{{$seo->	meta_description}}</p>
-        </div>
+    <!-- Form -->
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
+        @csrf
 
-        <div class="social-icons">
-          <a href="#"><i class="bx bxl-facebook"></i></a>
-          <a href="#"><i class="bx bxl-gmail"></i></a>
-          <a href="#"><i class="bx bxl-instagram"></i></a>
-          <a href="#"><i class="bx bxl-linkedin"></i></a>
-        </div>
-      </div>
-      <div class="right-side">
-        @if (session('error'))
-          <div class="error-message" style="color: red; margin-bottom: 10px;">
-            {{ session('error') }}
-          </div>
-        @endif
-
-        <form method="POST" action="{{ route('login') }}">
-          @csrf
-          <h1>Login</h1>
-
-          <!-- Email Input -->
-          <div class="input-box">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              required
-              value="{{ old('email') }}"
-            />
-            @error('email')
-              <span class="error-message" style="color: red; font-size: 12px;">{{ $message }}</span>
-            @enderror
-          </div>
-
-          <!-- Password Input -->
-          <div class="input-box">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            @error('password')
-              <span class="error-message" style="color: red; font-size: 12px;">{{ $message }}</span>
-            @enderror
-          </div>
-
-          <!-- Remember Me & Forgot Password -->
-          <div class="remember-forgot">
-            <label>
-              <input type="checkbox" name="remember" /> Remember me
+        <!-- Email -->
+        <div>
+            <label class="text-sm font-semibold text-gray-700">
+                Email <span class="text-red-500">*</span>
             </label>
-            @if (Route::has('password.request'))
-              <a href="{{ route('password.request') }}">Forgot password?</a>
-            @endif
-          </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn">Login</button>
+            <input 
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                class="w-full mt-2 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none"
+                required
+            >
+        </div>
 
-          <!-- Register Link -->
-          <div class="register-link">
-            <p>Don't have an account? <a href="{{ route('register') }}">Register here!</a></p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </body>
+        <!-- Password -->
+        <div>
+            <label class="text-sm font-semibold text-gray-700">
+                Password <span class="text-red-500">*</span>
+            </label>
+
+            <input 
+                type="password"
+                name="password"
+                class="w-full mt-2 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none"
+                required
+            >
+        </div>
+
+        <!-- Remember -->
+        <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 text-gray-600">
+                <input type="checkbox" name="remember" class="accent-blue-600">
+                Remember me
+            </label>
+        </div>
+
+        <!-- Button -->
+        <button 
+            type="submit"
+            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+        >
+            Login
+        </button>
+        <!-- Register Link -->
+<p class="text-center text-sm text-gray-600 mt-5">
+    Don’t have an account?
+    <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">
+        Register
+    </a>
+</p>
+    </form>
+
+</div>
+
+</body>
 </html>

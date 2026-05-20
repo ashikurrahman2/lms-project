@@ -27,24 +27,74 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+  public function store(Request $request): RedirectResponse
+{
+    $request->validate([
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
 
-        event(new Registered($user));
+        'phone' => ['required'],
+        'division' => ['required'],
+        'district' => ['required'],
+        'upazila' => ['required'],
+        'union' => ['required'],
 
-        Auth::login($user);
+        'postcode' => ['nullable'],
+        'address_details' => ['nullable'],
 
-        return redirect(route('dashboard', absolute: false));
+        'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png'],
+
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+    ]);
+
+    $imageName = null;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Image Upload
+    |--------------------------------------------------------------------------
+    */
+
+    if ($request->hasFile('image')) {
+
+        $image = $request->file('image');
+
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+        $image->move(public_path('uploads/users'), $imageName);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create User
+    |--------------------------------------------------------------------------
+    */
+
+    $user = User::create([
+
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+
+        'division' => $request->division,
+        'district' => $request->district,
+        'upazila' => $request->upazila,
+        'union' => $request->union,
+
+        'postcode' => $request->postcode,
+        'address_details' => $request->address_details,
+
+        'image' => $imageName,
+
+        'password' => Hash::make($request->password),
+
+    ]);
+
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    return redirect(route('dashboard', absolute: false));
+}
 }
