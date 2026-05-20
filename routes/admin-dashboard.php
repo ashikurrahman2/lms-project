@@ -22,7 +22,6 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\FactController;
 use App\Http\Controllers\Admin\ChooseUsController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\PermissionController;
@@ -93,8 +92,6 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
     Route::resource('student', StudentController::class);
     Route::resource('teacher', TeacherController::class);
     Route::resource('leadership', LeadershipController::class);
-
-    Route::resource('fact', FactController::class);
     Route::resource('service', ServiceController::class);
     Route::resource('choose-us', ChooseUsController::class);
     Route::get('/messages', [ContactUsController::class, 'index'])
