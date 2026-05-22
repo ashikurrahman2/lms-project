@@ -12,7 +12,7 @@
                                 <h2 class="display-3 text-white animated slideInDown">{{ $sl->heading_text }}</h2>
                                 <p class="fs-5 text-white mb-4 pb-2">{{ $sl->caption_text }}</p>
                                 <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <a href="{{ route('register') }}" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
                             </div>
                         </div>
                     </div>

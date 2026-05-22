@@ -1,214 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ asset('/') }}frontend/assets/css/custom-style.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Register</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet"
+/>
+
+<style>
+
+body{
+font-family:'Poppins',sans-serif;
+}
+
+.input-group{
+position:relative;
+}
+
+.field{
+
+width:100%;
+
+height:64px;
+
+padding:
+26px
+20px
+10px
+20px;
+
+border-radius:20px;
+
+background:#fff;
+
+border:1px solid #e5e7eb;
+
+outline:none;
+
+transition:.3s;
+
+font-size:15px;
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.05);
+
+}
+
+.field:focus{
+
+border-color:#4f46e5;
+
+box-shadow:
+0 0 0 5px rgba(79,70,229,.12);
+
+}
+
+.input-label{
+
+position:absolute;
+
+left:20px;
+
+top:20px;
+
+color:#94a3b8;
+
+transition:.3s;
+
+pointer-events:none;
+
+}
+
+.field:focus+.input-label,
+.field:not(:placeholder-shown)+.input-label{
+
+top:8px;
+
+font-size:11px;
+
+font-weight:700;
+
+color:#4f46e5;
+
+}
+
+.select-field{
+
+padding:0 20px;
+
+}
+
+.upload-card{
+
+height:160px;
+
+border:2px dashed #d1d5db;
+
+border-radius:28px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.upload-card:hover{
+
+border-color:#4f46e5;
+
+background:#eef2ff;
+
+}
+
+</style>
+
 </head>
-<body>
-  <div class="container">
-    <!-- Registration Form Section (Right Side) -->
-    <div class="right-side">
-      <form method="POST" action="{{ route('admin.register') }}" id="register-form" enctype="multipart/form-data">
-        @csrf
-        <h1 class="form-title">Register</h1>
 
-        <!-- Name -->
-        <div class="input-box">
-          <input type="text" name="name" placeholder="Full Name" required value="{{ old('name') }}" />
-        </div>
+<body
+class="min-h-screen bg-gradient-to-br from-indigo-950 via-blue-900 to-slate-950">
 
-        <!-- Email -->
-        <div class="input-box">
-          <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}" />
-        </div>
+<div
+class="min-h-screen flex items-center justify-center p-4">
 
-        <div class="two-column">
-          <!-- Password -->
-          <div class="input-box">
-            <input type="password" id="password" name="password" placeholder="Password" required />
-          </div>
+<div
+class="w-full max-w-7xl overflow-hidden rounded-[36px] bg-white shadow-2xl">
 
-          <!-- Confirm Password -->
-          <div class="input-box">
-            <input type="password" id="confirm-password" name="password_confirmation" placeholder="Confirm Password" required />
-          </div>
-        </div>
+<div
+class="grid lg:grid-cols-2">
 
-        <div class="two-column">
-          <!-- Profile Picture -->
-          <div class="input-box">
-            <input type="file" name="image" accept="image/*" required />
-          </div>
+<!-- LEFT -->
 
-          <!-- Mobile Number -->
-          <div class="input-box">
-            <input type="tel" name="mobile_number" placeholder="Mobile Number" required />
-          </div>
-        </div>
+<div
+class="hidden lg:flex flex-col justify-center p-20 bg-gradient-to-br from-blue-700 to-indigo-900 text-white">
 
-        <div class="two-column">
-          <!-- Gender -->
-          <div class="input">
-            <select name="gender" required>
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+<h1
+class="text-6xl font-bold">
 
-          <!-- Religion -->
-          <div class="input">
-            <select name="religion" required>
-              <option value="">Select Religion</option>
-              <option value="islam">Islam</option>
-              <option value="hinduism">Hinduism</option>
-              <option value="christianity">Christianity</option>
-              <option value="buddhism">Buddhism</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
+Mistri
+<span class="text-cyan-300">
+Admin
+</span>
 
-        <div class="two-column">
-          <!-- Blood Group -->
-          <div class="input">
-            <select name="blood_group" required>
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
-          </div>
+</h1>
 
-          <!-- Profession -->
-          <div class="input">
-            <select name="profession_type" required>
-              <option value="">Select Profession Type</option>
-              <option value="electrician">Electrician</option>
-              <option value="plumber">Plumber</option>
-              <option value="tiles_worker">Tiles Worker</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
+<p
+class="mt-10 text-lg leading-9 text-white/80">
 
-        <div class="two-column">
-          <!-- Division -->
-          <div class="input">
-            <select id="division" name="division" required>
-              <option value="">Select Division</option>
-            </select>
-          </div>
+{{ $seo->meta_description }}
 
-          <!-- District -->
-          <div class="input">
-            <select id="district" name="district" required>
-              <option value="">Select District</option>
-            </select>
-          </div>
-        </div>
+</p>
 
-        <!-- Upazila -->
-        <div class="input">
-          <select id="upazila" name="upazila" required>
-            <option value="">Select Upazila</option>
-          </select>
-        </div>
+<div
+class="grid grid-cols-3 gap-4 mt-10">
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn">Register</button>
+<div class="bg-white/10 rounded-3xl p-6">
+Secure
+</div>
 
-        <div class="register-link">
-          <p>Already have an account? <a href="{{ route('admin.login') }}">Login here!</a></p>
-        </div>
-      </form>
-    </div>
+<div class="bg-white/10 rounded-3xl p-6">
+Fast
+</div>
 
-    <!-- Left Side: Branding + Social Icons -->
-    <div class="left-side">
-        <h2 class="logo" style="font-family: 'Poppins', sans-serif;">
-            <i class="bx bxl-xing"></i> Mistri Ltd.
-        </h2>
-      <div class="text-left-side">
-        <h2>Join Us! <br /><span>Create Your Account</span></h2>
-        <p>{{$seo->	meta_description}}</p>
-      </div>
-      <div class="social-icons">
-        <a href="#"><i class="bx bxl-facebook"></i></a>
-        <a href="#"><i class="bx bxl-gmail"></i></a>
-        <a href="#"><i class="bx bxl-instagram"></i></a>
-        <a href="#"><i class="bx bxl-linkedin"></i></a>
-      </div>
-    </div>
-  </div>
-  <script>
-    const passwordField = document.getElementById("password");
-    const confirmPasswordField = document.getElementById("confirm-password");
-    const passwordError = document.getElementById("password-error");
-    const confirmPasswordError = document.getElementById("confirm-password-error");
-    const passwordErrorContainer = document.getElementById("password-error-container");
-    const confirmPasswordErrorContainer = document.getElementById("confirm-password-error-container");
-    const confirmPasswordContainer = document.getElementById("confirm-password-container");
-    const form = document.getElementById("register-form");
+<div class="bg-white/10 rounded-3xl p-6">
+Modern
+</div>
 
-    // Password validation function
-    function validatePassword() {
-      const password = passwordField.value;
-      const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+</div>
 
-      if (!regex.test(password)) {
-        passwordError.textContent =
-          "Password must be at least 8 characters long, include a capital letter, a number, and a special character.";
-        passwordErrorContainer.style.display = "block";
-        passwordField.parentElement.classList.add("invalid");
-        confirmPasswordContainer.classList.add("gap-added"); // Add gap
-        return false;
-      } else {
-        passwordErrorContainer.style.display = "none";
-        passwordField.parentElement.classList.remove("invalid");
-        confirmPasswordContainer.classList.remove("gap-added"); // Remove gap
-        return true;
-      }
-    }
+</div>
 
-    // Confirm password validation function
-    function validateConfirmPassword() {
-      const password = passwordField.value;
-      const confirmPassword = confirmPasswordField.value;
+<!-- RIGHT -->
 
-      if (password !== confirmPassword) {
-        confirmPasswordError.textContent = "Passwords do not match.";
-        confirmPasswordErrorContainer.style.display = "block";
-        confirmPasswordField.parentElement.classList.add("invalid");
-        return false;
-      } else {
-        confirmPasswordErrorContainer.style.display = "none";
-        confirmPasswordField.parentElement.classList.remove("invalid");
-        return true;
-      }
-    }
+<div
+class="p-5 sm:p-10 lg:p-14">
 
-    // Attach event listeners
-    passwordField.addEventListener("input", validatePassword);
-    confirmPasswordField.addEventListener("input", validateConfirmPassword);
+<div
+class="max-w-3xl mx-auto">
 
-    // Final validation before form submission
-    form.addEventListener("submit", (e) => {
-      if (!validatePassword() || !validateConfirmPassword()) {
-        e.preventDefault();
-      }
-    });
-  </script>
-  <script src="{{ asset('/') }}frontend/assets/js/script.js"></script>
+<div class="text-center">
+
+<h2
+class="text-4xl font-bold text-slate-800">
+
+Create Account
+
+</h2>
+
+<p
+class="text-slate-500 mt-2">
+
+Register Admin Profile
+
+</p>
+
+</div>
+
+<form
+method="POST"
+action="{{ route('admin.register') }}"
+enctype="multipart/form-data"
+class="space-y-5 mt-10">
+
+@csrf
+
+<!-- NAME -->
+
+<div class="input-group">
+
+<input
+type="text"
+name="name"
+placeholder=" "
+value="{{ old('name') }}"
+class="field"
+/>
+
+<label class="input-label">
+Full Name
+</label>
+
+</div>
+
+<!-- EMAIL -->
+
+<div class="input-group">
+
+<input
+type="email"
+name="email"
+placeholder=" "
+value="{{ old('email') }}"
+class="field"
+/>
+
+<label class="input-label">
+Email Address
+</label>
+
+</div>
+
+<!-- PASSWORD -->
+
+<div
+class="grid md:grid-cols-2 gap-5">
+
+<div class="input-group">
+
+<input
+type="password"
+name="password"
+placeholder=" "
+class="field"
+/>
+
+<label class="input-label">
+
+Password
+
+</label>
+
+</div>
+
+<div class="input-group">
+
+<input
+type="password"
+name="password_confirmation"
+placeholder=" "
+class="field"
+/>
+
+<label class="input-label">
+
+Confirm Password
+
+</label>
+
+</div>
+
+</div>
+
+<!-- IMAGE -->
+
+<div
+class="grid md:grid-cols-2 gap-5">
+
+<label
+class="upload-card">
+
+<input
+type="file"
+name="image"
+hidden
+>
+
+<div class="text-center">
+
+<div class="text-5xl">
+
+📷
+
+</div>
+
+<p class="mt-3 text-slate-500">
+
+Upload Profile
+
+</p>
+
+</div>
+
+</label>
+
+<div class="input-group">
+
+<input
+type="text"
+name="mobile_number"
+placeholder=" "
+class="field"
+/>
+
+<label class="input-label">
+
+Mobile Number
+
+</label>
+
+</div>
+
+</div>
+
+<!-- SELECT -->
+
+<div
+class="grid md:grid-cols-2 gap-5">
+
+<select
+name="gender"
+class="field select-field">
+
+<option>
+Select Gender
+</option>
+
+<option>
+Male
+</option>
+
+<option>
+Female
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+<select
+name="religion"
+class="field select-field">
+
+<option>
+Select Religion
+</option>
+
+<option>
+Islam
+</option>
+
+<option>
+Christianity
+</option>
+
+<option>
+Hinduism
+</option>
+
+</select>
+
+</div>
+
+<div
+class="grid md:grid-cols-2 gap-5">
+
+<select
+name="blood_group"
+class="field select-field">
+
+<option>
+Blood Group
+</option>
+
+<option>A+</option>
+<option>B+</option>
+<option>O+</option>
+
+</select>
+
+<select
+name="profession_type"
+class="field select-field">
+
+<option>
+Profession
+</option>
+
+<option>
+Electrician
+</option>
+
+<option>
+Plumber
+</option>
+
+<option>
+Tiles Worker
+</option>
+
+</select>
+
+</div>
+
+<!-- LOCATION -->
+
+<div
+class="grid md:grid-cols-2 gap-5">
+
+<select
+id="division"
+name="division"
+class="field select-field">
+
+<option>
+Division
+</option>
+
+</select>
+
+<select
+id="district"
+name="district"
+class="field select-field">
+
+<option>
+District
+</option>
+
+</select>
+
+</div>
+
+<select
+id="upazila"
+name="upazila"
+class="field select-field">
+
+<option>
+Upazila
+</option>
+
+</select>
+
+<!-- BUTTON -->
+
+<button
+type="submit"
+class="w-full rounded-3xl py-5 text-white font-semibold text-lg bg-gradient-to-r from-blue-600 to-indigo-700 hover:scale-[1.02] duration-300">
+
+Create Account
+
+</button>
+
+<div
+class="text-center">
+
+<p
+class="text-slate-500">
+
+Already have an account?
+
+<a
+href="{{ route('admin.login') }}"
+class="font-semibold text-indigo-600">
+
+Login
+
+</a>
+
+</p>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </body>
+
 </html>

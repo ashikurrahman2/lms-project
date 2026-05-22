@@ -2,7 +2,7 @@
 @section('title', 'Order #'.$order->id)
 
 @section('content')
-@include('frontend.layouts.others_header')
+@include('frontend.layouts.header')
 
 <div class="breadcrumb_section bg_gray page-title-mini">
     <div class="container">

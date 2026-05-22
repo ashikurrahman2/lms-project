@@ -346,19 +346,92 @@
                         </div>
 
                         <!-- Image -->
-                        <div>
+                   <div>
+    <label class="text-sm font-medium text-gray-700 mb-1.5 block">
+        Profile Image <span class="text-red-500">*</span>
+    </label>
 
-                            <label class="text-gray-700 font-semibold mb-2 block">
-                                Profile Image <span class="text-red-500">*</span>
-                            </label>
+    <div id="uploadZone"
+        class="relative flex items-center gap-3 border border-dashed border-gray-300 rounded-2xl px-4 py-3 cursor-pointer bg-gray-50 hover:bg-blue-50 hover:border-blue-400 transition">
 
-                            <input
-                                type="file"
-                                name="image"
-                                class="w-full border border-gray-200 rounded-2xl px-5 py-4 bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition"
-                            >
+        <input type="file" name="image" accept="image/*" id="imageInput"
+            class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
 
-                        </div>
+        {{-- Avatar --}}
+        <div class="w-12 h-12 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
+            <img id="previewImg" src="" alt="Preview" class="w-full h-full object-cover hidden">
+            <svg id="cameraIcon" class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+            </svg>
+        </div>
+
+        {{-- Text --}}
+        <div class="flex-1 min-w-0">
+            <p id="uploadTitle" class="text-sm font-medium text-gray-700 truncate">Click or drag to upload</p>
+            <p id="uploadSub" class="text-xs text-gray-400 mt-0.5">PNG, JPG, WEBP — max 5MB</p>
+        </div>
+
+        {{-- Remove Button --}}
+        <button type="button" id="removeBtn"
+            class="hidden text-xs text-red-500 hover:bg-red-50 px-2 py-1 rounded-lg flex-shrink-0 z-10">
+            ✕ Remove
+        </button>
+
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('imageInput');
+    const previewImg = document.getElementById('previewImg');
+    const cameraIcon = document.getElementById('cameraIcon');
+    const uploadTitle = document.getElementById('uploadTitle');
+    const uploadSub = document.getElementById('uploadSub');
+    const removeBtn = document.getElementById('removeBtn');
+    const zone = document.getElementById('uploadZone');
+
+    function showPreview(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            previewImg.src = e.target.result;
+            previewImg.classList.remove('hidden');
+            cameraIcon.classList.add('hidden');
+            uploadTitle.textContent = file.name.length > 24 ? file.name.slice(0, 24) + '…' : file.name;
+            uploadSub.textContent = (file.size / 1024).toFixed(0) + ' KB';
+            removeBtn.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    input.addEventListener('change', e => {
+        if (e.target.files[0]) showPreview(e.target.files[0]);
+    });
+
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('border-blue-400', 'bg-blue-50'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('border-blue-400', 'bg-blue-50'));
+    zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('border-blue-400', 'bg-blue-50');
+        const file = e.dataTransfer.files[0];
+        if (file) { input.files = e.dataTransfer.files; showPreview(file); }
+    });
+
+    removeBtn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        input.value = '';
+        previewImg.src = '';
+        previewImg.classList.add('hidden');
+        cameraIcon.classList.remove('hidden');
+        uploadTitle.textContent = 'Click or drag to upload';
+        uploadSub.textContent = 'PNG, JPG, WEBP — max 5MB';
+        removeBtn.classList.add('hidden');
+    });
+</script>
+
 
                     </div>
 

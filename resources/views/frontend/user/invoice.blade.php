@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Invoice #'.$order->id)
 @section('content')
-@include('frontend.layouts.others_header')
+@include('frontend.layouts.header')
 
 <!-- BREADCRUMB -->
 <div class="breadcrumb_section bg_gray page-title-mini">

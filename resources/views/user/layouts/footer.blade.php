@@ -1,7 +1,10 @@
-                        <div class="second-footer">
-                            <div class="container">
-                                <p>2025 © Copyright - All Rights Reserved.</p>
-                                <p>Made With <i class="fa fa-heart" aria-hidden="true"></i> By Trading Tech</p>
-                            </div>
-                        </div>
-</div>
+   <!-- footer start-->
+        <footer class="footer">
+          <div class="container mx-auto w-full">
+            <div class="gird grid-cols-12">
+              <div class="col-span-12 footer-copyright text-center">
+                <p class="mb-0">Copyright <span class="year-update"> </span> © Cuba Theme By Pixelstrap  </p>
+              </div>
+            </div>
+          </div>
+        </footer>

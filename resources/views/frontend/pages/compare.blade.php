@@ -2,7 +2,7 @@
 @section('title','Shopwise|Product')
 @section('content')
 <!-- START HEADER -->
-@include('frontend.layouts.others_header')
+@include('frontend.layouts.header')
 <!-- END HEADER -->
 
 <!-- START SECTION BREADCRUMB -->
