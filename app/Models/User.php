@@ -6,98 +6,129 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'division',
-        'district',
-        'upazila',
-        'union',
-        'postcode',
-        'address_details',
-        'image',
-        'password',
+        'name', 'email', 'phone',
+        'division', 'district', 'upazila', 'union',
+        'postcode', 'address_details', 'image', 'password',
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
-    private static $image, $imageName, $directory, $imageUrl;
+    // ──────────────────────────────────────────
+    // Accessor
+    // ──────────────────────────────────────────
 
-    private static function getImageUrl($request)
+    public function getImageAttribute($value): string
     {
-        self::$image = $request->file('image');
-        self::$imageName = time() . '_' . self::$image->getClientOriginalName();
-        self::$directory = "upload/user/";
-
-        // Move the uploaded image
-        self::$image->move(public_path(self::$directory), self::$imageName);
-
-        // Resize the image using Intervention Image
-        $imageManager = new ImageManager(new Driver());
-        $imagePath = public_path(self::$directory . self::$imageName);
-        $image = $imageManager->read($imagePath);
-        $image->resize(300, 300)->save($imagePath);
-
-        self::$imageUrl = self::$directory . self::$imageName;
-        return self::$imageUrl;
-    }
-
-    private static function saveBasicInfo($user, $request, $imageUrl)
-    {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->division = $request->division;
-        $user->district = $request->district;
-        $user->upazila = $request->upazila;
-        $user->union = $request->union;
-        $user->postcode = $request->postcode;
-        $user->address_details = $request->address_details;
-        $user->image = $imageUrl;
-
-         // ✅ Check if new password provided, then update
-        if ($request->filled('new_password')) {
-            $user->password = Hash::make($request->new_password);
+        if ($value && file_exists(public_path($value))) {
+            return asset($value);
         }
-
-        $user->save();
+        return asset('assets/images/user/default.png');
     }
 
-    public static function updateUser($request, $id)
+    // ──────────────────────────────────────────
+    // Image helper
+    // ──────────────────────────────────────────
+
+    private static function uploadImage($file): string
+    {
+        $imageName = time() . '_' . $file->getClientOriginalName();
+        $directory = 'upload/user/';
+
+        $file->move(public_path($directory), $imageName);
+
+        $manager   = new ImageManager(new Driver());
+        $imagePath = public_path($directory . $imageName);
+        $manager->read($imagePath)->resize(50, 50)->save($imagePath);
+
+        return $directory . $imageName;
+    }
+
+    private static function deleteImageFile(?string $imagePath): void
+    {
+        if ($imagePath && file_exists(public_path($imagePath))) {
+            unlink(public_path($imagePath));
+        }
+    }
+
+    // ──────────────────────────────────────────
+    // CRUD methods
+    // ──────────────────────────────────────────
+
+    public static function createUser($request): self
+    {
+        $imageUrl = $request->hasFile('image')
+            ? self::uploadImage($request->file('image'))
+            : null;
+
+        return self::create([
+            'name'            => $request->name,
+            'email'           => $request->email,
+            'phone'           => $request->phone,
+            'division'        => $request->division,
+            'district'        => $request->district,
+            'upazila'         => $request->upazila,
+            'union'           => $request->union,
+            'postcode'        => $request->postcode,
+            'address_details' => $request->address_details,
+            'image'           => $imageUrl,
+            'password'        => Hash::make($request->password),
+        ]);
+    }
+
+    public static function updateUser($request, $id): void
     {
         $user = self::findOrFail($id);
 
-        // Image delete + upload
-        if ($request->file('image')) {
-            if ($user->image && file_exists(public_path($user->image))) {
-                unlink(public_path($user->image));
-            }
-            self::$imageUrl = self::getImageUrl($request);
+        if ($request->hasFile('image')) {
+            self::deleteImageFile($user->getRawOriginal('image'));
+            $imageUrl = self::uploadImage($request->file('image'));
         } else {
-            self::$imageUrl = $user->image;
+            $imageUrl = $user->getRawOriginal('image');
         }
 
-        // Save basic fields
-        self::saveBasicInfo($user, $request, self::$imageUrl);
+        // Password update — current password check করে
+        $passwordData = [];
+        if ($request->filled('new_password')) {
+            if (!Hash::check($request->current_password, $user->getRawOriginal('password'))) {
+                throw new \Exception('Current password is incorrect.');
+            }
+            $passwordData['password'] = Hash::make($request->new_password);
+        }
+
+        $user->update(array_merge([
+            'name'            => $request->name,
+            'email'           => $request->email,
+            'phone'           => $request->phone,
+            'division'        => $request->division,
+            'district'        => $request->district,
+            'upazila'         => $request->upazila,
+            'union'           => $request->union,
+            'postcode'        => $request->postcode,
+            'address_details' => $request->address_details,
+            'image'           => $imageUrl,
+        ], $passwordData));
+    }
+
+    public static function deleteUser($id): void
+    {
+        $user = self::findOrFail($id);
+        self::deleteImageFile($user->getRawOriginal('image'));
+        $user->delete();
     }
 }

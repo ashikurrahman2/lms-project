@@ -236,19 +236,25 @@
               </div>
             </div>
             <ul class="profile-dropdown onhover-show-div">
-              <li><a class="flex items-center" href="login.html"><i data-feather="user"></i><span>Account</span></a></li>
+              <li>
+                  <a class="flex items-center" href="{{ route('profile.edit') }}">
+                      <i data-feather="user"></i>
+                      <span>Account</span>
+                  </a>
+              </li>
               <li><a class="flex items-center" href="mail-box.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
               <li><a class="flex items-center" href="task.html"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
               <li><a class="flex items-center" href="add-user.html"><i data-feather="settings"></i><span>Settings</span></a></li>
-<li>
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="flex items-center">
-            <i data-feather="log-out"></i>
-            <span>Log out</span>
-        </button>
-    </form>
-</li>            </ul>
+              <li>
+                  <form action="{{ route('logout') }}" method="POST">
+                      @csrf
+                      <button type="submit" class="flex items-center">
+                          <i data-feather="log-out"></i>
+                          <span>Log out</span>
+                      </button>
+                  </form>
+              </li>           
+             </ul>
           </li>
         </ul>
       </div>
