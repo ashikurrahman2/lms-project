@@ -40,8 +40,9 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin|editor
     Route::get('/profile/edit', [AdminHomeController::class, 'edit'])->name('admin.profile.edit');
     Route::put('/profile/update', [AdminHomeController::class, 'update'])->name('admin.profile.update');
 
+    // Password Routes
     Route::get('/password/change', [AdminHomeController::class, 'passwordChange'])->name('admin.password.change');
-    Route::post('/password/update', [AdminHomeController::class, 'passwordUpdate'])->name('admin.password.update');
+    Route::post('/password/update', [AdminHomeController::class, 'passwordUpdate'])->name('password.update');
     Route::get('/logout', [LoginController::class, 'destroy'])->name('admin.logout');
 
     Route::get('/notifications/clear-all', [NotificationController::class, 'clearAll'])->name('notifications.clearAll');

@@ -711,7 +711,7 @@
                                     </div>
 
                                     <!-- My Profile -->
-                                    <a href="#!" class="dropdown-item">
+                                    <a href="{{ route('admin.profile') }}" class="dropdown-item">
                                         <i class="ti ti-user-circle me-1 fs-lg align-middle"></i>
                                         <span class="align-middle">{{ __('menu.profile') }}</span>
                                     </a>
@@ -723,7 +723,7 @@
                                     </a>
 
                                     <!-- Settings -->
-                                    <a href="javascript:void(0);" class="dropdown-item">
+                                    <a href="{{ route('admin.password.change') }}" class="dropdown-item">
                                         <i class="ti ti-settings-2 me-1 fs-lg align-middle"></i>
                                         <span class="align-middle">{{ __('menu.settings') }}</span>
                                     </a>
