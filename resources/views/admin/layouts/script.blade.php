@@ -1,39 +1,22 @@
-<script src="{{asset('/')}}admin/assets/js/plugins/apexcharts.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/pages/dashboard-ecommerce.js"></script><!-- [Page Specific JS] end -->
-<!-- Required Js -->
-<script src="{{asset('/')}}admin/assets/js/plugins/popper.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/simplebar.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/bootstrap.min.js"></script>
+ <!-- Theme Config Js -->
+<script src="{{ asset('/') }}admin/nadmin/assets/js/config.js"></script>
+        <script src="demo.js"></script>
 
-<script src="{{asset('/')}}admin/assets/js/fonts/custom-font.js"></script>
-<script src="{{asset('/')}}admin/assets/js/pcoded.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/feather.min.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-<script src="{{asset('/')}}admin/assets/js/plugins/sweetalert2.all.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/toastr.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"> </script>
+         <!-- Vendor js -->
+<script src="{{ asset('/') }}admin/nadmin/assets/js/vendors.min.js"></script>
 
-<!-- datatable Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/jquery.dataTables.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/dataTables.bootstrap5.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/buttons.colVis.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/buttons.print.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/pdfmake.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/jszip.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/dataTables.buttons.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/vfs_fonts.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/buttons.html5.min.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/buttons.bootstrap5.min.js"></script>
-<!--Internal Fileuploads js-->
-<script src="{{asset('/')}}admin/assets/fileuploads/js/fileupload.js"></script>
-<script src="{{asset('/')}}admin/assets/fileuploads/js/file-upload.js"></script>
-<script src="{{asset('/')}}admin/assets/js/plugins/bootstrap-switch-button.min.js"></script>
-<!-- Summernote -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"></script>
-{{-- <script src="{{asset('/')}}admin/assets/js/plugins/summernote/0.8.20/summernote-bs4.min.js"></script> --}}
-<!-- Bootstrap Tags Input JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+<!-- App js -->
+<script src="{{ asset('/') }}admin/nadmin/assets/js/app.js"></script>
+
+
+        <!-- Apex Chart js -->
+        <script src="{{ asset('/') }}admin/nadmin/assets/plugins/apexcharts/apexcharts.min.js"></script>
+
+        <!-- Custom table -->
+        <script src="{{ asset('/') }}admin/nadmin/assets/js/pages/custom-table.js"></script>
+
+        <!-- Dashboard js -->
+        <script src="{{ asset('/') }}admin/nadmin/assets/js/pages/dashboard-projects.js"></script>
 <script>
   $(document).ready(function() {
       $('#summernote').summernote({

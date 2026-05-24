@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ChildcategorieController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LeadershipController;
 use App\Http\Controllers\Admin\PickupController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategorieController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -94,6 +95,9 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
     Route::resource('leadership', LeadershipController::class);
     Route::resource('service', ServiceController::class);
     Route::resource('choose-us', ChooseUsController::class);
+    Route::get('/language/{locale}', [LanguageController::class, 'switch'])
+    ->name('language.switch')
+    ->where('locale', '[a-z]{2}');
     Route::get('/messages', [ContactUsController::class, 'index'])
     ->name('contactus.index');
     Route::delete('/messages/{message}', [ContactUsController::class, 'destroy'])

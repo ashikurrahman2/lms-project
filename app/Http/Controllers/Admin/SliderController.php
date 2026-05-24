@@ -24,45 +24,54 @@ class SliderController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $sliders = Slider::all();
-            return DataTables::of($sliders)
-                ->addIndexColumn()
-                ->addColumn('image', function ($row) {
-                    if ($row->s_img) {
-                        return '<img src="' . asset($row->s_img) . '" width="80" height="60" style="object-fit:cover; border-radius:4px;">';
-                    } else {
-                        return 'No image uploaded';
-                    }
-                })
-                ->addColumn('action', function ($row) {
-                    $actionbtn = '';
+   public function index(Request $request)
+{
+    if ($request->ajax()) {
+        $sliders = Slider::latest()->get();
 
-                    if (auth('admin')->user()->can('update slider')) {
-                        $actionbtn .= '<a href="javascript:void(0)" class="btn btn-primary btn-sm me-1 edit" data-id="' . $row->id . '" data-bs-toggle="modal" data-bs-target="#editModal">
-                                            <i class="fa fa-edit"></i>
-                                        </a>';
-                    }
+        return DataTables::of($sliders)
+            ->addIndexColumn()
+            ->addColumn('s_img', function ($row) {
+                return $row->s_img
+                    ? '<img src="' . asset($row->s_img) . '" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">'
+                    : '<span class="badge bg-secondary">No Image</span>';
+            })
+            ->addColumn('action', function ($row) {
+                $btn = '<div class="d-flex align-items-center justify-content-center gap-1">';
 
-                    if (auth('admin')->user()->can('delete slider')) {
-                        $actionbtn .= '<button class="btn btn-danger btn-sm delete" data-id="' . $row->id . '">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                        <form id="delete-form-' . $row->id . '" action="' . route('slider.destroy', $row->id) . '" method="POST" style="display: none;">
-                                            ' . csrf_field() . '
-                                            ' . method_field('DELETE') . '
-                                        </form>';
-                    }
+                if (auth()->user()->can('update slider')) {
+                    $btn .= '<a href="javascript:void(0)"
+                                class="btn btn-primary btn-sm edit"
+                                data-id="' . $row->id . '"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal"
+                                title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </a>';
+                }
 
-                    return $actionbtn;
-                })
-                ->rawColumns(['image', 'action'])
-                ->make(true);
-        }
-        return view('admin.pages.slider.index');
+                if (auth()->user()->can('delete slider')) {
+                    $btn .= '<button class="btn btn-danger btn-sm delete"
+                                data-id="' . $row->id . '"
+                                title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <form id="delete-form-' . $row->id . '"
+                                  action="' . route('slider.destroy', $row->id) . '"
+                                  method="POST" style="display:none;">
+                                ' . csrf_field() . method_field('DELETE') . '
+                            </form>';
+                }
+
+                $btn .= '</div>';
+                return $btn;
+            })
+            ->rawColumns(['s_img', 'action'])
+            ->make(true);
     }
+
+    return view('admin.pages.slider.index');
+}
 
     /**
      * Show the form for creating a new resource.

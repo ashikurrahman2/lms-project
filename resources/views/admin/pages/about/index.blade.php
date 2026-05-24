@@ -3,27 +3,46 @@
 @section('title', 'About Section')
 
 @section('admin_content')
-<div class="pc-container">
-    <div class="pc-content">
-        <!-- [ Breadcrumb ] -->
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-sm-auto">
-                        <div class="page-header-title">
-                            <h5 class="mb-0">About Section</h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-auto">
-                        @can('create about')
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button>
-                        @endcan
-                    </div>
-                </div>
+
+{{-- DataTable CSS --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<style>
+    .ytable td {
+        vertical-align: middle !important;
+    }
+    .ytable .btn-sm {
+        padding: 4px 8px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .ytable .d-flex {
+        justify-content: center;
+    }
+</style>
+
+<div class="content-page">
+    <div class="container-fluid">
+
+        <!-- Page Title -->
+        <div class="page-title-head d-flex align-items-center">
+            <div class="flex-grow-1">
+                <h4 class="page-main-title m-0">About Section</h4>
+            </div>
+            <div class="text-end d-flex align-items-center gap-2">
+                @can('create about')
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+                    + Add New
+                </button>
+                @endcan
+                <ol class="breadcrumb m-0 py-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                    <li class="breadcrumb-item active">About Section</li>
+                </ol>
             </div>
         </div>
 
-        <!-- [ Main Content ] -->
+        <!-- Main Content -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -37,10 +56,10 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Heading</th>
-                                         <th>Paragraph 1</th>
+                                        <th>Paragraph 1</th>
                                         <th>Paragraph 2</th>
                                         <th>Image</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -51,7 +70,7 @@
                                         <th>Paragraph 1</th>
                                         <th>Paragraph 2</th>
                                         <th>Image</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -60,8 +79,9 @@
                 </div>
             </div>
         </div>
-    </div> <!-- .pc-content -->
-</div> <!-- .pc-container -->
+
+    </div>
+</div>
 
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -112,40 +132,62 @@
     </div>
 </div>
 
-<!-- Scripts -->
+{{-- Scripts --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 $(function () {
+
     var table = $('.ytable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('about.index') }}",
+        ajax: {
+            url: "{{ route('about.index') }}",
+            type: "GET"
+        },
         columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'heading', name: 'heading' },
-            { data: 'paragraph_1', name: 'paragraph_1' },
-            { data: 'paragraph_2', name: 'paragraph_2' },
-            { data: 'image', name: 'image' },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false
-            }
+            { data: 'DT_RowIndex',  name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
+            { data: 'heading',      name: 'heading' },
+            { data: 'paragraph_1',  name: 'paragraph_1' },
+            { data: 'paragraph_2',  name: 'paragraph_2' },
+            { data: 'image',        name: 'image', orderable: false, searchable: false, width: '80px' },
+            { data: 'action',       name: 'action', orderable: false, searchable: false, width: '100px', className: 'text-center' }
         ]
     });
 
-   // Load edit form
+    // Load edit form via AJAX
     $('body').on('click', '.edit', function () {
         let id = $(this).data('id');
-        $.get("about/" + id + "/edit", function (data) {
+        $.get("{{ url('admin/about') }}/" + id + "/edit", function (data) {
             $('#edit-form-body').html(data);
         });
     });
 
+        // Delete confirm with SweetAlert2
+    $('body').on('click', '.delete', function () {
+        let id = $(this).data('id');
 
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Delete!',
+            cancelButtonText: 'No, Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#delete-form-' + id).submit();
+            }
+        });
+    });
 
- 
 });
 </script>
+
 @endsection

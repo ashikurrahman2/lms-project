@@ -20,34 +20,40 @@ class TeacherController extends BaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $teachers = Teacher::all();
+            $teachers = Teacher::latest()->get();
+
             return DataTables::of($teachers)
                 ->addIndexColumn()
                 ->addColumn('t_img', function ($row) {
-                    $src = $row->t_img && file_exists(public_path($row->t_img))
-                        ? asset($row->t_img)
-                        : asset('frontend/assets/img/default-teacher.jpg');
-                    return '<img src="' . $src . '" alt="image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">';
+                    return $row->t_img
+                        ? '<img src="' . asset($row->t_img) . '" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">'
+                        : '<span class="badge bg-secondary">No Image</span>';
                 })
                 ->addColumn('action', function ($row) {
-                    $actionbtn = '';
+                    $btn = '<div class="d-flex align-items-center justify-content-center gap-1">';
 
-                    $actionbtn .= '<a href="javascript:void(0)" class="btn btn-primary btn-sm me-1 edit"
-                                    data-id="' . $row->id . '"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editModal">
-                                        <i class="fa fa-edit"></i>
-                                    </a>';
+                    $btn .= '<a href="javascript:void(0)"
+                                class="btn btn-primary btn-sm edit"
+                                data-id="' . $row->id . '"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal"
+                                title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </a>';
 
-                    $actionbtn .= '<button class="btn btn-danger btn-sm delete" data-id="' . $row->id . '">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <form id="delete-form-' . $row->id . '" action="' . route('teacher.destroy', $row->id) . '" method="POST" style="display: none;">
-                                        ' . csrf_field() . '
-                                        ' . method_field('DELETE') . '
-                                    </form>';
+                    $btn .= '<button class="btn btn-danger btn-sm delete"
+                                data-id="' . $row->id . '"
+                                title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <form id="delete-form-' . $row->id . '"
+                                action="' . route('teacher.destroy', $row->id) . '"
+                                method="POST" style="display:none;">
+                                ' . csrf_field() . method_field('DELETE') . '
+                            </form>';
 
-                    return $actionbtn;
+                    $btn .= '</div>';
+                    return $btn;
                 })
                 ->rawColumns(['t_img', 'action'])
                 ->make(true);

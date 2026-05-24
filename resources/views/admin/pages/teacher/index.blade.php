@@ -3,27 +3,49 @@
 @section('title', 'Teacher')
 
 @section('admin_content')
-<div class="pc-container">
-    <div class="pc-content">
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-sm-auto">
-                        <div class="page-header-title">
-                            <h5 class="mb-0">Teacher</h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-auto">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button>
-                    </div>
-                </div>
+
+{{-- DataTable CSS --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    .ytable td {
+        vertical-align: middle !important;
+    }
+    .ytable .btn-sm {
+        padding: 4px 8px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .ytable .d-flex {
+        justify-content: center;
+    }
+</style>
+
+<div class="content-page">
+    <div class="container-fluid">
+
+        <!-- Page Title -->
+        <div class="page-title-head d-flex align-items-center">
+            <div class="flex-grow-1">
+                <h4 class="page-main-title m-0">Teacher</h4>
+            </div>
+            <div class="text-end d-flex align-items-center gap-2">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+                    + Add New
+                </button>
+                <ol class="breadcrumb m-0 py-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                    <li class="breadcrumb-item active">Teacher</li>
+                </ol>
             </div>
         </div>
 
+        <!-- Main Content -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header table-card-header">
+                    <div class="card-header">
                         <h5>All Teacher List</h5>
                     </div>
                     <div class="card-body">
@@ -35,7 +57,7 @@
                                         <th>Teacher Name</th>
                                         <th>Teacher Image</th>
                                         <th>Designation</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -45,7 +67,7 @@
                                         <th>Teacher Name</th>
                                         <th>Teacher Image</th>
                                         <th>Designation</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -54,43 +76,42 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
 <!-- Add Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form action="{{ route('teacher.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('teacher.store') }}" method="POST" enctype="multipart/form-data" class="modal-content">
             @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add New Teacher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label>Teacher Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="t_name" required>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label>Teacher Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="t_name" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Teacher Image</label>
-                        <input type="file" class="dropify" name="t_img">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Designation</label>
-                        <input type="text" class="form-control" name="t_design" placeholder="e.g. Senior Lecturer">
-                    </div>
+                <div class="form-group mb-3">
+                    <label>Teacher Image</label>
+                    <input type="file" class="dropify" name="t_img" accept="image/*">
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group mb-3">
+                    <label>Designation</label>
+                    <input type="text" class="form-control" name="t_design" placeholder="e.g. Senior Lecturer">
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
     </div>
 </div>
 
 <!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -98,46 +119,75 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="edit-form-body">
-                <!-- Edit form loaded via AJAX -->
+                <!-- Edit form loads via AJAX -->
             </div>
         </div>
     </div>
 </div>
 
+{{-- Scripts --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    $(function () {
-        var table = $('.ytable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "{{ route('teacher.index') }}",
-                dataSrc: 'data'
-            },
-            language: {
-                emptyTable: `
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 0;">
-                        <img src="{{ asset('admin/images/no_data.svg') }}" alt="No Data" style="width: 80px; height:80px; margin-bottom: 15px;" />
-                        <div style="font-size: 16px; color: #555;"><b>No data available</b><br/><p>Please add new entity regarding this table</p></div>
-                    </div>
-                `
-            },
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 't_name',      name: 't_name' },
-                { data: 't_img',       name: 't_img' },
-                { data: 't_design',    name: 't_design' },
-                { data: 'action',      name: 'action', orderable: false, searchable: false }
-            ]
-        });
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        // Load edit form
-        $('body').on('click', '.edit', function () {
-            let id = $(this).data('id');
-            $.get("teacher/" + id + "/edit", function (data) {
-                $('#edit-form-body').html(data);
-            });
+<script>
+$(function () {
+
+    var table = $('.ytable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('teacher.index') }}",
+            type: "GET"
+        },
+        language: {
+            emptyTable: `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 0;">
+                    <img src="{{ asset('admin/images/no_data.svg') }}" alt="No Data" style="width:80px; height:80px; margin-bottom:15px;" />
+                    <div style="font-size:16px; color:#555;"><b>No data available</b><br/><p>Please add new entity regarding this table</p></div>
+                </div>
+            `
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
+            { data: 't_name',      name: 't_name' },
+            { data: 't_img',       name: 't_img', orderable: false, searchable: false, width: '80px' },
+            { data: 't_design',    name: 't_design' },
+            { data: 'action',      name: 'action', orderable: false, searchable: false, width: '100px', className: 'text-center' }
+        ]
+    });
+
+    // Load edit form via AJAX
+    $('body').on('click', '.edit', function () {
+        let id = $(this).data('id');
+        $.get("{{ url('admin/teacher') }}/" + id + "/edit", function (data) {
+            $('#edit-form-body').html(data);
         });
     });
+
+    // Delete with SweetAlert2
+    $('body').on('click', '.delete', function () {
+        let id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Delete!',
+            cancelButtonText: 'No, Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#delete-form-' + id).submit();
+            }
+        });
+    });
+
+});
 </script>
+
 @endsection

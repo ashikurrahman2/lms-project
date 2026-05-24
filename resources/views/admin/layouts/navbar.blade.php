@@ -1,344 +1,757 @@
-<nav class="pc-header">
-    <div class="header-wrapper">
-        <!-- [Mobile Media Block] start -->
-        <div class="me-auto pc-mob-drp">
-            <ul class="list-unstyled">
-                <!-- ======= Menu collapse Icon ===== -->
-                <li class="pc-h-item pc-sidebar-collapse"><a href="#" class="pc-head-link ms-0" id="sidebar-hide"><i
-                            class="ph-duotone ph-list"></i></a></li>
-                <li class="pc-h-item pc-sidebar-popup"><a href="#" class="pc-head-link ms-0" id="mobile-collapse"><i
-                            class="ph-duotone ph-list"></i></a></li>
-                <li class="dropdown pc-h-item"><a
-                        class="pc-head-link dropdown-toggle arrow-none m-0 trig-drp-search"
-                        data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                        aria-expanded="false"><i class="ph-duotone ph-magnifying-glass"></i></a>
-                    <div class="dropdown-menu pc-h-dropdown drp-search">
-                        <form class="px-1">
-                            <div class="form-group mb-0 d-flex align-items-center"><input type="search"
-                                    class="form-control border-0 shadow-none" placeholder="Search here. . .">
-                                <button class="btn btn-light-secondary btn-search">Search</button></div>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div><!-- [Mobile Media Block end] -->
-        <div class="ms-auto">
-            <ul class="list-unstyled">
-                <li class="dropdown pc-h-item">
-                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                        aria-expanded="false">
-                        <i class="ph-duotone ph-sun-dim"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end pc-h-dropdown"><a href="#!" class="dropdown-item"
-                            onclick="layout_change('dark')"><i class="ph-duotone ph-moon"></i> <span>Dark</span>
-                        </a><a href="#!" class="dropdown-item" onclick="layout_change('light')"><i
-                                class="ph-duotone ph-sun-dim"></i> <span>Light</span> </a><a href="#!"
-                            class="dropdown-item" onclick="layout_change_default()"><i
-                                class="ph-duotone ph-cpu"></i> <span>Default</span></a></div>
-                </li>
-                {{-- <li class="dropdown pc-h-item">
-                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="ph-duotone ph-bell"></i>
-                        <span class="badge bg-danger pc-h-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown"
-                         style="max-height: calc(100vh - 235px);" data-simplebar>
-                        <div class="dropdown-header d-flex align-items-center justify-content-between">
-                            <h4 class="m-0">Notifications</h4>
+    <div class="wrapper">
+   <header class="app-topbar">
+                <div class="container-fluid topbar-menu">
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- Topbar Brand Logo -->
+                        <div class="logo-topbar">
+                            <!-- Logo light -->
+                            <a href="index.html" class="logo-light">
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo.png" alt="logo" />
+                                </span>
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="small logo" />
+                                </span>
+                            </a>
+
+                            <!-- Logo Dark -->
+                            <a href="index.html" class="logo-dark">
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-black.png" alt="dark logo" />
+                                </span>
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="small logo" />
+                                </span>
+                            </a>
                         </div>
 
-                        <div class="dropdown-body text-wrap header-notification-scroll">
-                            <ul class="list-group list-group-flush">
-                                @forelse(auth()->user()->unreadNotifications as $notification)
-                                    @php
-                                        $image = $notification->data['image'] ?? null;
-                                    @endphp
-                                    <li class="list-group-item">
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ $image ? asset($image) : asset('assets/images/default-avatar.png') }}"
-                                                alt="Admin Image" class="rounded-circle" width="40" height="40">
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="d-flex justify-content-between">
-                                                    <h5 class="mb-0 text-truncate">
-                                                        {{ $notification->data['admin_name'] ?? 'Unknown Admin' }}
-                                                    </h5>
-                                                    <span class="text-sm text-muted">{{ $notification->created_at->diffForHumans() }}</span>
+                        <!-- Sidebar Menu Toggle Button -->
+                        <button class="sidenav-toggle-button btn btn-primary btn-icon">
+                            <i class="ti ti-menu-4"></i>
+                        </button>
+
+                        <!-- Horizontal Menu Toggle Button -->
+                        <button class="topnav-toggle-button px-2" data-bs-toggle="collapse" data-bs-target="#topnav-menu">
+                            <i class="ti ti-menu-4"></i>
+                        </button>
+
+                        <div id="search-box-rounded" class="app-search d-none d-xl-flex">
+                            <input type="search" class="form-control rounded-pill topbar-search" name="search" placeholder="Quick Search..." />
+                            <i class="ti ti-search app-search-icon text-muted"></i>
+                        </div>
+
+                        <div id="megamenu-columns" class="topbar-item d-none d-md-flex">
+                            <div class="dropdown">
+                                <button class="topbar-link btn fw-medium btn-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" type="button" aria-haspopup="false" aria-expanded="false">
+                                    Mega Menu
+                                    <i class="ti ti-chevron-down ms-1"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-xxl p-0">
+                                    <div class="h-100" style="max-height: 380px" data-simplebar="">
+                                        <div class="row g-0">
+                                            <!-- Dashboard & Analytics -->
+                                            <div class="col-md-4">
+                                                <div class="p-2">
+                                                    <h5 class="mb-1 fw-semibold fs-sm dropdown-header">Dashboard &amp; Analytics</h5>
+                                                    <ul class="list-unstyled megamenu-list">
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Sales Dashboard
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Marketing Dashboard
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Finance Overview
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                User Analytics
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Traffic Insights
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                <p class="text-muted mt-1 mb-0">
-                                                    {{ $notification->data['message'] ?? 'New notification' }}
-                                                </p>
+                                            </div>
+
+                                            <!-- Project Management -->
+                                            <div class="col-md-4">
+                                                <div class="p-2">
+                                                    <h5 class="mb-1 fw-semibold fs-sm dropdown-header">Project Management</h5>
+                                                    <ul class="list-unstyled megamenu-list">
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-minus align-middle me-1 text-muted"></i>
+                                                                Kanban Workflow
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-minus align-middle me-1 text-muted"></i>
+                                                                Project Timeline
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-minus align-middle me-1 text-muted"></i>
+                                                                Task Management
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-minus align-middle me-1 text-muted"></i>
+                                                                Team Members
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-minus align-middle me-1 text-muted"></i>
+                                                                Assignments
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <!-- User Management -->
+                                            <div class="col-md-4">
+                                                <div class="p-2 bg-light bg-opacity-50">
+                                                    <h5 class="mb-1 fw-semibold fs-sm dropdown-header">User Management</h5>
+                                                    <ul class="list-unstyled megamenu-list">
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                User Profiles
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Access Control
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Security Settings
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                User Groups
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="dropdown-item">
+                                                                <i class="ti ti-chevron-right align-middle me-1 text-muted"></i>
+                                                                Authentication
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </li>
-                                @empty
-                                    <li class="list-group-item text-center text-muted">No new notifications</li>
-                                @endforelse
-                            </ul>
+                                    </div>
+                                    <!-- end .h-100-->
+                                </div>
+                                <!-- .dropdown-menu-->
+                            </div>
+                            <!-- .dropdown-->
                         </div>
 
-                        <div class="dropdown-footer">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="d-grid">
-                                        <a href="{{ route('notifications.markAllAsRead') }}" class="btn btn-outline-secondary w-100">Mark all as read</a>
+                        <div id="megamenu-apps" class="topbar-item d-none d-md-flex">
+                            <div class="dropdown">
+                                <button class="topbar-link btn fw-medium btn-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" type="button" aria-haspopup="false" aria-expanded="false">
+                                    Apps
+                                    <i class="ti ti-chevron-down ms-1"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-xxl p-0">
+                                    <div class="h-100" style="max-height: 380px" data-simplebar="">
+                                        <div class="row g-0">
+                                            <div class="col-sm-8">
+                                                <div class="row g-0">
+                                                    <div class="col-sm-6">
+                                                        <div class="p-2">
+                                                            <a href="#!" class="dropdown-item">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-primary border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-basket fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">eCommerce</h5>
+                                                                        <span class="text-muted fs-12">Products, orders &amp; etc.</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item my-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-success border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-message fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Chat</h5>
+                                                                        <span class="text-muted fs-12">Team conversations</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item my-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-danger border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-list-check fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Task</h5>
+                                                                        <span class="text-muted fs-12">Plan and track work</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item mt-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-info border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-mailbox fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Email</h5>
+                                                                        <span class="text-muted fs-12">Messages and inbox</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="p-2">
+                                                            <a href="#!" class="dropdown-item">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-secondary border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-building fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Companies</h5>
+                                                                        <span class="text-muted fs-12">Business profiles</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item my-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-dark border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-id fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Contacts Diary</h5>
+                                                                        <span class="text-muted fs-12">People and connections</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item my-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-warning border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-calendar fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Calendar</h5>
+                                                                        <span class="text-muted fs-12">Events and reminders</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+
+                                                            <a href="#!" class="dropdown-item mt-2">
+                                                                <span class="d-flex align-items-center">
+                                                                    <span class="avatar-md me-2">
+                                                                        <span class="avatar-title text-success border border-light bg-light bg-opacity-50 rounded">
+                                                                            <i class="ti ti-lifebuoy fs-22"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span>
+                                                                        <h5 class="fs-base mb-0 lh-base">Support</h5>
+                                                                        <span class="text-muted fs-12">Help and assistance</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end row-->
+
+                                                <div class="row g-0 border-top border-light border-dashed text-center">
+                                                    <div class="col">
+                                                        <div class="p-3">
+                                                            <p class="fw-medium text-muted mb-2 fs-11 text-uppercase lh-1">-: &nbsp; Support &nbsp;:-</p>
+                                                            <h5 class="fs-15 mb-0">help@mydomain.com</h5>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end col-->
+                                                    <div class="col">
+                                                        <div class="p-3">
+                                                            <p class="fw-medium text-muted mb-2 fs-11 text-uppercase lh-1">-: &nbsp; Help: &nbsp;:-</p>
+                                                            <h5 class="fs-15 mb-0">+(12) 3456 7890</h5>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end col-->
+                                                </div>
+                                                <!-- end row-->
+                                            </div>
+                                            <!-- end col-->
+
+                                            <div class="col-sm-4">
+                                                <div class="h-100 position-relative rounded-end rounded-0 overflow-hidden" style="background: url(assets/images/stock/small-8.jpg); background-size: cover">
+                                                    <div class="p-3 card-img-overlay bg-gradient bg-secondary bg-opacity-90 d-flex align-items-center justify-content-center">
+                                                        <div class="text-center text-white">
+                                                            <i class="ti ti-atom fs-36"></i>
+
+                                                            <p class="text-white text-opacity-75 mb-3 text-uppercase">Limited Offer</p>
+
+                                                            <h3 class="fw-semibold text-white mb-2 fs-20">Unlock Exclusive Savings</h3>
+
+                                                            <h4 class="fw-medium fs-16 mb-1">
+                                                                <del class="text-white text-opacity-75">$49.00</del>
+                                                                /
+                                                                <span class="fw-bold text-white">$25 USD</span>
+                                                            </h4>
+
+                                                            <button type="button" class="btn btn-danger btn-sm mt-3">
+                                                                <i class="ti ti-shopping-cart me-1"></i>
+                                                                Grab Deal
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end .bg-light-->
+                                            </div>
+                                            <!-- end col-->
+                                        </div>
+                                        <!-- end row-->
                                     </div>
+                                    <!-- end .h-100-->
+                                </div>
+                                <!-- .dropdown-menu-->
+                            </div>
+                            <!-- .dropdown-->
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <div id="theme-dropdown" class="topbar-item d-none d-sm-flex">
+                            <div class="dropdown">
+                                <button class="topbar-link" data-bs-toggle="dropdown" type="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="ti ti-sun topbar-link-icon d-none" id="theme-icon-light"></i>
+                                    <i class="ti ti-moon topbar-link-icon d-none" id="theme-icon-dark"></i>
+                                    <i class="ti ti-sun-moon topbar-link-icon d-none" id="theme-icon-system"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end" data-thememode="dropdown">
+                                    <label class="dropdown-item cursor-pointer">
+                                        <input class="form-check-input" type="radio" name="data-bs-theme" value="light" style="display: none" />
+                                        <i class="ti ti-sun align-middle me-1 fs-16"></i>
+                                        <span class="align-middle">Light</span>
+                                    </label>
+                                    <label class="dropdown-item cursor-pointer">
+                                        <input class="form-check-input" type="radio" name="data-bs-theme" value="dark" style="display: none" />
+                                        <i class="ti ti-moon align-middle me-1 fs-16"></i>
+                                        <span class="align-middle">Dark</span>
+                                    </label>
+                                    <label class="dropdown-item cursor-pointer">
+                                        <input class="form-check-input" type="radio" name="data-bs-theme" value="system" style="display: none" />
+                                        <i class="ti ti-sun-moon align-middle me-1 fs-16"></i>
+                                        <span class="align-middle">System</span>
+                                    </label>
+                                </div>
+                                <!-- end dropdown-menu-->
+                            </div>
+                            <!-- end dropdown-->
+                        </div>
+
+                        <div id="apps-dropdown-grid" class="topbar-item d-none d-xl-flex">
+                            <div class="dropdown">
+                                <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
+                                    <i class="ti ti-apps topbar-link-icon"></i>
+                                </button>
+
+                                <div class="dropdown-menu dropdown-menu-lg p-2 dropdown-menu-end">
+                                    <div class="row align-items-center g-1">
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title text-bg-light rounded-circle">
+                                                        <img src="assets/images/logos/google.svg" alt="Google Logo" height="18" />
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Google</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title text-bg-light rounded-circle">
+                                                        <img src="assets/images/logos/figma.svg" alt="Figma Logo" height="18" />
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Figma</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title text-bg-light rounded-circle">
+                                                        <img src="assets/images/logos/slack.svg" alt="Slack Logo" height="18" />
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Slack</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title text-bg-light rounded-circle">
+                                                        <img src="assets/images/logos/dropbox.svg" alt="Dropbox Logo" height="18" />
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Dropbox</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4 text-center">
+                                            <a href="javascript:void(0);" class="btn btn-sm rounded-circle btn-icon btn-danger">
+                                                <i class="ti ti-circle-dashed-plus fs-18"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                                                        <i class="ti ti-calendar fs-18"></i>
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Calendar</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                                                        <i class="ti ti-message-circle fs-18"></i>
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Chat</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                                                        <i class="ti ti-folder fs-18"></i>
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Files</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <a href="javascript:void(0);" class="dropdown-item border border-dashed rounded text-center py-2">
+                                                <span class="avatar-sm d-block mx-auto mb-1">
+                                                    <span class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                                                        <i class="ti ti-users fs-18"></i>
+                                                    </span>
+                                                </span>
+                                                <span class="align-middle fw-medium">Team</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End dropdown-menu -->
+                            </div>
+                            <!-- end dropdown-->
+                        </div>
+
+                     @php
+                        use Illuminate\Support\Carbon;
+                        $newNotifications = auth()->user()->unreadNotifications->filter(function ($notification) {
+                            $created = Carbon::parse($notification->created_at);
+                            return $created->isToday() || $created->isYesterday();
+                        });
+
+                        $earlierNotifications = auth()->user()->unreadNotifications->filter(function ($notification) {
+                            $created = Carbon::parse($notification->created_at);
+                            return !$created->isToday() && !$created->isYesterday();
+                        });
+                    @endphp
+
+                    <div id="notification-dropdown-people" class="topbar-item">
+                        <div class="dropdown">
+                            <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
+                                <i class="ti ti-bell topbar-link-icon animate-ring"></i>
+                                <span class="badge text-bg-danger badge-circle topbar-badge">
+                                    {{ auth()->user()->unreadNotifications->count() }}
+                                </span>
+                            </button>
+
+                            <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg">
+                                <div class="px-3 py-2 border-bottom">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-0 fs-md fw-semibold">Notifications</h6>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="#!" class="badge badge-soft-success badge-label py-1">
+                                                {{ auth()->user()->unreadNotifications->count() }} Notifications
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="max-height: 300px" data-simplebar="">
+
+                                    {{-- New Notifications --}}
+                                    @if($newNotifications->count())
+                                        <div class="px-3 py-1 border-bottom bg-light">
+                                            <h6 class="text-muted mb-0 fs-xs fw-semibold">NEW</h6>
+                                        </div>
+                                        @foreach($newNotifications as $notification)
+                                            @php $image = $notification->data['image'] ?? null; @endphp
+                                            <div class="dropdown-item notification-item py-2 text-wrap">
+                                                <span class="d-flex align-items-center gap-3">
+                                                    <span class="flex-shrink-0 position-relative">
+                                                        <img src="{{ $image ? asset($image) : asset('assets/images/users/user-1.jpg') }}"
+                                                            class="avatar-md rounded-circle"
+                                                            alt="User Avatar" />
+                                                        <span class="position-absolute rounded-pill bg-success notification-badge">
+                                                            <i class="ti ti-bell align-middle"></i>
+                                                            <span class="visually-hidden">unread notification</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="flex-grow-1 text-muted">
+                                                        <span class="fw-medium text-body">
+                                                            {{ $notification->data['admin_name'] ?? 'Unknown' }}
+                                                        </span>
+                                                        <br>
+                                                        <span class="fs-sm">
+                                                            {{ $notification->data['message'] ?? 'New notification' }}
+                                                        </span>
+                                                        <br />
+                                                        <span class="fs-xs">{{ $notification->created_at->diffForHumans() }}</span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
+                                    {{-- Earlier Notifications --}}
+                                    @if($earlierNotifications->count())
+                                        <div class="px-3 py-1 border-bottom bg-light">
+                                            <h6 class="text-muted mb-0 fs-xs fw-semibold">EARLIER</h6>
+                                        </div>
+                                        @foreach($earlierNotifications as $notification)
+                                            @php $image = $notification->data['image'] ?? null; @endphp
+                                            <div class="dropdown-item notification-item py-2 text-wrap">
+                                                <span class="d-flex align-items-center gap-3">
+                                                    <span class="flex-shrink-0 position-relative">
+                                                        <img src="{{ $image ? asset($image) : asset('assets/images/users/user-1.jpg') }}"
+                                                            class="avatar-md rounded-circle"
+                                                            alt="User Avatar" />
+                                                        <span class="position-absolute rounded-pill bg-secondary notification-badge">
+                                                            <i class="ti ti-bell align-middle"></i>
+                                                            <span class="visually-hidden">notification</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="flex-grow-1 text-muted">
+                                                        <span class="fw-medium text-body">
+                                                            {{ $notification->data['admin_name'] ?? 'Unknown' }}
+                                                        </span>
+                                                        <br>
+                                                        <span class="fs-sm">
+                                                            {{ $notification->data['message'] ?? 'New notification' }}
+                                                        </span>
+                                                        <br />
+                                                        <span class="fs-xs">{{ $notification->created_at->diffForHumans() }}</span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
+                                    {{-- No Notifications --}}
+                                    @if($newNotifications->isEmpty() && $earlierNotifications->isEmpty())
+                                        <div class="dropdown-item notification-item py-3 text-center text-muted">
+                                            <i class="ti ti-bell-off fs-xl d-block mb-1"></i>
+                                            No new notifications
+                                        </div>
+                                    @endif
+
+                                </div>
+                                <!-- end simplebar -->
+
+                                <a href="{{ route('notifications.index') }}"
+                                class="dropdown-item text-center text-reset text-decoration-underline link-offset-2 fw-bold notify-item border-top border-light py-2">
+                                    Mark all as read
+                                </a>
+
+                            </div>
+                            <!-- End dropdown-menu -->
+                        </div>
+                        <!-- end dropdown -->
+                    </div>
+
+                        <div id="fullscreen-toggler" class="topbar-item d-none d-md-flex">
+                            <button class="topbar-link" type="button" data-toggle="fullscreen">
+                                <i class="ti ti-maximize topbar-link-icon"></i>
+                                <i class="ti ti-minimize topbar-link-icon d-none"></i>
+                            </button>
+                        </div>
+
+                        <div id="monochrome-toggler" class="topbar-item d-none d-xl-flex">
+                            <button id="monochrome-mode" class="topbar-link" type="button" data-toggle="monochrome">
+                                <i class="ti ti-palette topbar-link-icon"></i>
+                            </button>
+                        </div>
+
+                        <div class="topbar-item d-none d-sm-flex">
+                            <button class="topbar-link btn-theme-setting" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" type="button">
+                                <i class="ti ti-settings topbar-link-icon"></i>
+                            </button>
+                        </div>
+
+                      {{-- Language Selector Dropdown --}}
+                        @php
+                            $languages = [
+                                'en' => ['name' => 'English',  'native' => 'English',    'flag' => 'us', 'code' => 'EN'],
+                                'bn' => ['name' => 'Bengali',  'native' => 'বাংলা',      'flag' => 'bd', 'code' => 'BN'],
+                                'de' => ['name' => 'German',   'native' => 'Deutsch',    'flag' => 'de', 'code' => 'DE'],
+                                'it' => ['name' => 'Italian',  'native' => 'Italiano',   'flag' => 'it', 'code' => 'IT'],
+                                'es' => ['name' => 'Spanish',  'native' => 'Español',    'flag' => 'es', 'code' => 'ES'],
+                                'ru' => ['name' => 'Russian',  'native' => 'Русский',    'flag' => 'ru', 'code' => 'RU'],
+                                'hi' => ['name' => 'Hindi',    'native' => 'हिन्दी',      'flag' => 'in', 'code' => 'HI'],
+                                'ar' => ['name' => 'Arabic',   'native' => 'عربي',       'flag' => 'sa', 'code' => 'AR'],
+                            ];
+                            $currentLocale = app()->getLocale();
+                            $current = $languages[$currentLocale] ?? $languages['en'];
+                        @endphp
+
+               <div id="language-selector-rounded" class="topbar-item">
+    <div class="dropdown">
+        <button class="topbar-link fw-bold" data-bs-toggle="dropdown"
+                type="button" aria-haspopup="false" aria-expanded="false">
+            <img src="{{ asset('/') }}admin/nadmin/assets/images/flags/{{ $current['flag'] }}.svg"
+                alt="{{ $current['name'] }}"
+                class="rounded-circle me-2"
+                height="18" />
+            <span>{{ $current['code'] }}</span>
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-end">
+            @foreach ($languages as $locale => $lang)
+                <a href="{{ route('language.switch', $locale) }}"
+                class="dropdown-item {{ $currentLocale === $locale ? 'active' : '' }}"
+                title="{{ $lang['name'] }}">
+                    <img src="{{ asset('/') }}admin/nadmin/assets/images/flags/{{ $lang['flag'] }}.svg"
+                        alt="{{ $lang['name'] }}"
+                        class="me-1 rounded-circle"
+                        height="18" />
+                    <span class="align-middle">{{ $lang['native'] }}</span>
+                </a>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+                        <div id="user-dropdown-detailed" class="topbar-item nav-user">
+                            <div class="dropdown">
+                                <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" href="#!" aria-haspopup="false" aria-expanded="false">
+                                    <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('assets/images/users/user-1.jpg') }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image" />
+                                    <div class="d-lg-flex align-items-center gap-1 d-none">
+                                        <span>
+                                            <h5 class="my-0 lh-1 pro-username">{{ auth()->user()->name }}</h5>
+                                            <span class="fs-xs lh-1">Admin Head</span>
+                                        </span>
+                                        <i class="ti ti-chevron-down align-middle"></i>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- Header -->
+                                    <div class="dropdown-header noti-title">
+                                        <h6 class="text-overflow m-0">Welcome back 👋!</h6>
+                                    </div>
+
+                                    <!-- My Profile -->
+                                    <a href="#!" class="dropdown-item">
+                                        <i class="ti ti-user-circle me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">{{ __('menu.profile') }}</span>
+                                    </a>
+
+                                    <!-- Notifications -->
+                                    <a href="{{ route('notifications.index') }}" class="dropdown-item">
+                                        <i class="ti ti-bell-ringing me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">Notifications</span>
+                                    </a>
+
+                                    <!-- Settings -->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <i class="ti ti-settings-2 me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">{{ __('menu.settings') }}</span>
+                                    </a>
+
+                                    <!-- Support -->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <i class="ti ti-headset me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">Support Center</span>
+                                    </a>
+
+                                    <!-- Divider -->
+                                    <div class="dropdown-divider"></div>
+
+                                    <!-- Lock -->
+                                    <a href="auth-lock-screen.html" class="dropdown-item">
+                                        <i class="ti ti-lock me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">Lock Screen</span>
+                                    </a>
+
+                                    <!-- Logout -->
+                                    <a href="{{ route('admin.logout') }}" class="dropdown-item fw-semibold">
+                                        <i class="ti ti-logout me-1 fs-lg align-middle"></i>
+                                        <span class="align-middle">{{ __('menu.logout') }}</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li> --}}
-
-                <li class="dropdown pc-h-item">
-                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="ph-duotone ph-bell"></i>
-                        <span class="badge bg-danger pc-h-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown"
-                         style="max-height: calc(100vh - 235px); overflow-y: auto; padding: 0; width: 100%; box-sizing: border-box;">
-
-                        <div class="dropdown-header d-flex align-items-center justify-content-between"
-                             style="padding: 15px;">
-                            <h4 class="m-0">Notifications</h4>
-                            <a href="{{ route('notifications.clearAll') }}" class="text-danger small d-flex align-items-center">
-                                <i class="ti ti-x f-18"></i>
-                            </a>
-                        </div>
-
-                        @php
-                            use Illuminate\Support\Carbon;
-                            $newNotifications = auth()->user()->unreadNotifications->filter(function ($notification) {
-                                $created = Carbon::parse($notification->created_at);
-                                return $created->isToday() || $created->isYesterday();
-                            });
-
-                            $earlierNotifications = auth()->user()->unreadNotifications->filter(function ($notification) {
-                                $created = Carbon::parse($notification->created_at);
-                                return !$created->isToday() && !$created->isYesterday();
-                            });
-                        @endphp
-
-                        <div class="dropdown-body text-wrap header-notification-scroll" style="width: 100%;">
-                            <ul class="list-group list-group-flush" style="margin: 0; padding: 0; list-style: none; width: 100%;">
-                                {{-- New Notifications --}}
-                                @if($newNotifications->count())
-                                    <li class="list-group-item" style="padding: 10px 15px; border-bottom: 1px solid #ddd; width: 100%; box-sizing: border-box;">
-                                        <h5 class="text-span mb-0">New</h5>
-                                    </li>
-                                    @foreach($newNotifications as $notification)
-                                        @php $image = $notification->data['image'] ?? null; @endphp
-                                        <li class="list-group-item" style="padding: 10px 15px; border-bottom: 1px solid #ddd; width: 100%; box-sizing: border-box;">
-                                            <div class="d-flex align-items-center p-2" style="gap: 10px;">
-                                                <img src="{{ $image ? asset($image) : asset('assets/images/default-avatar.png') }}"
-                                                     alt="Admin Image" class="rounded-circle border" width="40" height="40"
-                                                     style="padding: 5px; border: 1px solid #ddd;">
-                                                <div class="flex-grow-1 ms-3">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h5 class="mb-0 text-truncate ps-4">
-                                                            {{ $notification->data['admin_name'] ?? 'Unknown Admin' }}
-                                                        </h5>
-                                                        <span class="text-sm text-muted">{{ $notification->created_at->diffForHumans() }}</span>
-                                                    </div>
-                                                    <p class="text-muted mt-1 mb-0">
-                                                        {{ $notification->data['message'] ?? 'New notification' }}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                        </li>
-                                    @endforeach
-                                @endif
-
-                                {{-- Earlier Notifications --}}
-                                @if($earlierNotifications->count())
-                                    <li class="list-group-item" style="padding: 10px 15px; border-bottom: 1px solid #ddd; width: 100%; box-sizing: border-box;">
-                                        <p class="text-muted mb-0 fw-semibold">Earlier</p>
-                                    </li>
-                                    @foreach($earlierNotifications as $notification)
-                                        @php $image = $notification->data['image'] ?? null; @endphp
-                                        <li class="list-group-item" style="padding: 10px 15px; border-bottom: 1px solid #ddd; width: 100%; box-sizing: border-box;">
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $image ? asset($image) : asset('assets/images/default-avatar.png') }}"
-                                                     alt="Admin Image" class="rounded-circle" width="40" height="40">
-                                                <div class="flex-grow-1 ms-3">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h5 class="mb-0 text-truncate">
-                                                            {{ $notification->data['admin_name'] ?? 'Unknown Admin' }}
-                                                        </h5>
-                                                        <span class="text-sm text-muted">{{ $notification->created_at->diffForHumans() }}</span>
-                                                    </div>
-                                                    <p class="text-muted mt-1 mb-0">
-                                                        {{ $notification->data['message'] ?? 'New notification' }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                @endif
-
-                                {{-- No Notifications --}}
-                                @if($newNotifications->isEmpty() && $earlierNotifications->isEmpty())
-                                    <li class="list-group-item text-center text-muted"
-                                        style="padding: 10px 15px; border-bottom: 1px solid #ddd; width: 100%; box-sizing: border-box;">
-                                        No new notifications
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-
-                        <div class="dropdown-footer">
-                            <div class="d-grid">
-                                {{-- Optional: Mark all as read --}}
-                                <a href="{{ route('notifications.index') }}" class="btn btn-outline-secondary w-100">Mark all as read</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-
-                <li class="dropdown pc-h-item header-user-profile">
-                    <a
-                        class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
-                        role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
-                        <img
-                            src="{{ asset(Auth::user()->image) }}"
-                            alt="user-image"
-                            class="user-avtar rounded-circle"
-                        />
-                        </a>
-                    <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
-                        <div class="dropdown-header d-flex align-items-center justify-content-between">
-                            <h4 class="m-0">Profile</h4>
-                        </div>
-                        <div class="dropdown-body">
-                            <div class="profile-notification-scroll position-relative"
-                                style="max-height: calc(100vh - 225px)">
-                                <ul class="list-group list-group-flush w-100">
-                                    <li class="list-group-item">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="{{ asset(Auth::user()->image) }}"alt="user-image" class="wid-50 rounded-circle">
-                                            </div>
-                                            <div class="flex-grow-1 mx-3">
-                                                <h5 class="mb-0">{{Auth::user()->name}}</h5><a class="link-primary"
-                                                    href="mailto:carson.darrin@company.io">{{Auth::user()->email}}</a>
-                                            </div><span class="badge bg-primary">PRO</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <a href="{{ route('admin.password.change') }}" class="dropdown-item">
-                                            <span class="d-flex align-items-center"><i class="ph-duotone ph-key"></i>
-                                                <span>Change password</span>
-                                            </span>
-                                        </a>
-                                        <a href="{{ route('admin.profile.edit') }}" class="dropdown-item"><span class="d-flex align-items-center"><i class="ph-duotone ph-user-circle"></i> <span>Edit profile</span> </span></a>
-                                        {{-- <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center"><i class="ph-duotone ph-envelope-simple"></i>
-                                                <span>Recently mail</span>
-                                            </span>
-                                                <div class="user-group"><img src="{{asset('/')}}admin/assets/images/user/avatar-1.jpg" alt="user-image" class="avtar">
-                                                    <img src="{{asset('/')}}admin/assets/images/user/avatar-2.jpg" alt="user-image" class="avtar">
-                                                    <img src="{{asset('/')}}admin/assets/images/user/avatar-3.jpg" alt="user-image" class="avtar">
-                                                </div>
-                                        </a>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-calendar-blank"></i>
-                                                <span>Schedule meetings</span>
-                                            </span>
-                                        </a>      --}}
-                                    </li>
-                                    {{-- <li class="list-group-item">
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-heart"></i>
-                                                <span>Favorite</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-arrow-circle-down"></i>
-                                                <span>Download</span>
-                                            </span>
-                                            <span class="avtar avtar-xs rounded-circle bg-danger text-white">10</span></a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-globe-hemisphere-west"></i>
-                                                <span>Languages</span>
-                                            </span>
-                                            <span class="flex-shrink-0">
-                                                <select class="form-select bg-transparent form-select-sm border-0 shadow-none">
-                                                    <option value="1">English</option>
-                                                    <option value="2">Spain</option>
-                                                    <option value="3">Arbic</option>
-                                                </select>
-                                            </span>
-                                        </div>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-flag"></i>
-                                                <span>Country</span>
-                                            </span>
-                                        </a>
-                                        <div class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-moon"></i>
-                                                <span>Dark mode</span>
-                                            </span>
-                                            <div class="form-check form-switch form-check-reverse m-0">
-                                                <input class="form-check-input f-18" id="dark-mode" type="checkbox" onclick="dark_mode()" role="switch">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-user-circle"></i>
-                                                <span>Edit profile</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-star text-warning"></i>
-                                                <span>Upgrade account</span>
-                                                <span class="badge bg-light-success border border-success ms-2">NEW</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-bell"></i>
-                                                <span>Notifications</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-gear-six"></i>
-                                                <span>Settings</span>
-                                            </span>
-                                        </a>
-                                    </li> --}}
-                                    <li class="list-group-item">
-                                        {{-- <a href="#" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-plus-circle"></i>
-                                                <span>Add account</span>
-                                            </span>
-                                        </a> --}}
-                                        <a href="{{ route('admin.logout') }}" id="logout" class="dropdown-item">
-                                            <span class="d-flex align-items-center">
-                                                <i class="ph-duotone ph-power"></i>
-                                                <span>Logout</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                </div>
+            </header>
     </div>
-</nav>

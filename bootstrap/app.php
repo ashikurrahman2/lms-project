@@ -19,6 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
             // Your custom middleware
             'role.custom' => \App\Http\Middleware\RoleMiddleware::class,  // <-- Add your custom middleware here
         ]);
+        // ✅ SetLocale Middleware added
+            $middleware->web(append: [
+                \App\Http\Middleware\SetLocale::class,
+            ]);
             $middleware->statefulApi();
             $middleware->validateCsrfTokens(except: [
                 'sslcommerz/*',

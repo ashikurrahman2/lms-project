@@ -17,44 +17,64 @@ class LeadershipController extends BaseController
         $this->toastr = $toastr;
     }
 
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $leaderships = Leadership::all();
-            return DataTables::of($leaderships)
-                ->addIndexColumn()
-                ->addColumn('l_img', function ($row) {
-                    $src = $row->l_img && file_exists(public_path($row->l_img))
-                        ? asset($row->l_img)
-                        : asset('frontend/assets/img/default-leadership.jpg');
-                    return '<img src="' . $src . '" alt="image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">';
-                })
-                ->addColumn('action', function ($row) {
-                    $actionbtn = '';
+ public function index(Request $request)
+{
+    if ($request->ajax()) {
+        $leaderships = Leadership::latest()->get();
 
-                    $actionbtn .= '<a href="javascript:void(0)" class="btn btn-primary btn-sm me-1 edit"
-                                    data-id="' . $row->id . '"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editModal">
-                                        <i class="fa fa-edit"></i>
-                                    </a>';
+        return DataTables::of($leaderships)
+            ->addIndexColumn()
+            ->addColumn('l_img', function ($row) {
+                return $row->l_img
+                    ? '<img src="' . asset($row->l_img) . '" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">'
+                    : '<span class="badge bg-secondary">No Image</span>';
+            })
+            ->addColumn('l_ldn', function ($row) {
+                return $row->l_ldn
+                    ? '<a href="' . $row->l_ldn . '" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fab fa-linkedin-in"></i>
+                       </a>'
+                    : '<span class="text-muted">N/A</span>';
+            })
+            ->addColumn('l_fc', function ($row) {
+                return $row->l_fc
+                    ? '<a href="' . $row->l_fc . '" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fab fa-facebook-f"></i>
+                       </a>'
+                    : '<span class="text-muted">N/A</span>';
+            })
+            ->addColumn('action', function ($row) {
+                $btn = '<div class="d-flex align-items-center justify-content-center gap-1">';
 
-                    $actionbtn .= '<button class="btn btn-danger btn-sm delete" data-id="' . $row->id . '">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <form id="delete-form-' . $row->id . '" action="' . route('leadership.destroy', $row->id) . '" method="POST" style="display: none;">
-                                        ' . csrf_field() . '
-                                        ' . method_field('DELETE') . '
-                                    </form>';
+                $btn .= '<a href="javascript:void(0)"
+                            class="btn btn-primary btn-sm edit"
+                            data-id="' . $row->id . '"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal"
+                            title="Edit">
+                            <i class="fa fa-edit"></i>
+                        </a>';
 
-                    return $actionbtn;
-                })
-                ->rawColumns(['l_img', 'action'])
-                ->make(true);
-        }
+                $btn .= '<button class="btn btn-danger btn-sm delete"
+                            data-id="' . $row->id . '"
+                            title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <form id="delete-form-' . $row->id . '"
+                              action="' . route('leadership.destroy', $row->id) . '"
+                              method="POST" style="display:none;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                        </form>';
 
-        return view('admin.pages.leadership.index');
+                $btn .= '</div>';
+                return $btn;
+            })
+            ->rawColumns(['l_img', 'l_ldn', 'l_fc', 'action'])
+            ->make(true);
     }
+
+    return view('admin.pages.leadership.index');
+}
 
     public function store(Request $request)
     {
