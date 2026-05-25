@@ -3,7 +3,7 @@
     <a href="index.html" class="logo">
         <span class="logo logo-light">
             <span class="logo-lg"><img src="{{ $setting->logo }}" alt="logo" /></span>
-            <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo" /></span>
+            <span class="logo-sm"><img src="{{ asset('/') }}admin/nadmin/assets/images/logo-sm.png" alt="small logo" /></span>
         </span>
 
         <span class="logo logo-dark">
@@ -147,84 +147,35 @@
                     <span class="menu-text">{{ __('menu.service') }}</span>
                 </a>
             </li>
-
+            
+               <li class="side-nav-item">
+                <a href="{{ route('gallary.index') }}" class="side-nav-link">
+                    <span class="menu-text">{{ __('menu.gallary') }}</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>
-@endrole
+
           
-                <li class="side-nav-title mt-2" data-lang="custom-pages">Custom Pages</li>
+                <li class="side-nav-title mt-2" data-lang="custom-pages">Operational Pages</li>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#pages" aria-expanded="false" aria-controls="pages" class="side-nav-link">
                         <span class="menu-icon"><i class="ti ti-files"></i></span>
-                        <span class="menu-text" data-lang="pages">Pages</span>
+                        <span class="menu-text" data-lang="pages">Categories</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="pages">
                         <ul class="sub-menu">
                             <li class="side-nav-item">
-                                <a href="pages-about-us.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-about-us">About Us</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-contact-us.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-contact-us">Contact Us</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-pricing.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-pricing">Pricing</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-empty.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-empty">Empty Page</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-timeline.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-timeline">Timeline</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-gallery.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-gallery">Gallery</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-faq.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-faq">FAQ</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-sitemap.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-sitemap">Sitemap</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-search-results.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-search-results">Search Results</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-coming-soon.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-coming-soon">Coming Soon</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-privacy-policy.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-privacy-policy">Privacy Policy</span>
-                                </a>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="pages-terms-conditions.html" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-terms-conditions">Terms &amp; Conditions</span>
+                                <a href="{{ route('category.index') }}" class="side-nav-link">
+                                    <span class="menu-text" data-lang="pages-about-us">All Categories</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @endrole
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#plugins" aria-expanded="false" aria-controls="plugins" class="side-nav-link">
                         <span class="menu-icon"><i class="ti ti-cpu"></i></span>

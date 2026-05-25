@@ -21,4 +21,5 @@ return [
     'teacher' => 'शिक्षक',
     'leadership' => 'नेतृत्व',
     'service' => 'सेवा',
+    'gallary'       => 'गैलरी',
 ];

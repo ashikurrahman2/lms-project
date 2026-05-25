@@ -1,162 +1,202 @@
 @extends('layouts.admin')
-@section('title','Categorie')
+
+@section('title', 'Category')
+
 @section('admin_content')
-<div class="pc-container">
-    <div class="pc-content">
-        <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-sm-auto">
-                        <div class="page-header-title">
-                            <h5 class="mb-0">Category</h5>
-                        </div>
+
+{{-- DataTable CSS --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    .ytable td {
+        vertical-align: middle !important;
+    }
+    .ytable .btn-sm {
+        padding: 4px 8px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .ytable .d-flex {
+        justify-content: center;
+    }
+</style>
+
+<div class="content-page">
+    <div class="container-fluid">
+
+        <!-- Page Title -->
+        <div class="page-title-head d-flex align-items-center">
+            <div class="flex-grow-1">
+                <h4 class="page-main-title m-0">Category</h4>
+            </div>
+            <div class="text-end d-flex align-items-center gap-2">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+                    + Add New
+                </button>
+                <ol class="breadcrumb m-0 py-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                    <li class="breadcrumb-item active">Category</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>All Category List</h5>
                     </div>
-                    <div class="col-sm-auto">
-                        <ul class="breadcrumb">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">+ Add New</button>
-                        </ul>
+                    <div class="card-body">
+                        <div class="dt-responsive table-responsive">
+                            <table class="table table-striped table-bordered nowrap table-sm ytable">
+                                <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Category Name</th>
+                                        <th>Category Slug</th>
+                                        <th class="text-center">Icon</th>
+                                        <th class="text-center">Home Page</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Category Name</th>
+                                        <th>Category Slug</th>
+                                        <th class="text-center">Icon</th>
+                                        <th class="text-center">Home Page</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- [ breadcrumb ] end -->
-        <!-- [ Main Content ] start -->
-      <div class="row">
-        <!-- HTML5 Export Buttons table start -->
-        <div class="col-sm-12">
-          <div class="card">
-            <div class="card-header table-card-header">
-              <h5>All categories list here</h5>
-            </div>
-            <div class="card-body">
-              <div class="dt-responsive table-responsive">
-                <table id="cbtn-selectors" class="table table-striped table-bordered nowrap table-sm">
-                  <thead>
-                    <tr>
-                      <th>SL</th>
-                      <th>Categorie Name</th>
-                      <th>Categorie Slug</th>
-                      <th>Icon</th>
-                      <th>Home Page</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($categories as $category )
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$category->category_name}}</td>
-                            <td>{{$category->category_slug}}</td>
-                            <td><i class="{{$category->icon }} fa-2x"></i></td>
-                            <td>
-                             @if ($category->home_page == 1)
-                              <span class="badge badge-success">Home Page</span>
-                             @else
-                              <span class="badge badge-danger">Not Home Page</span>
-                             @endif
-                            </td>
-                            <td class="d-flex">
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm me-1 edit" data-id="{{ $category->id }}" data-bs-toggle="modal" data-bs-target="#editModal">
-                                  <i class="fa fa-edit"></i>
-                                </a>
-                                <button class="btn btn-danger btn-sm delete" data-id="{{$loop->iteration}}">
-                                  <i class="fa fa-trash"></i>
-                                </button>
-                                <form id="delete-form-{{ $loop->iteration }}" action="{{ route('category.destroy', $category->id) }}" method="POST">
-                                  @csrf
-                                  @method("DELETE")
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach    
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>SL</th>
-                      <th>Categorie Name</th>
-                      <th>Categorie Slug</th>
-                      <th>Home Page</th>
-                      <th>Icon</th>
-                      <th>Action</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div><!-- HTML5 Export Buttons end -->
 
-      </div>
-      <!-- [ Main Content ] end -->
     </div>
 </div>
-  <!-- Category Insert Modal -->
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <form action="{{ route('category.store') }}" method="POST" class="modal-content">
+            @csrf
             <div class="modal-header">
-                <h5 class="modal-title h4" id="myLargeModalLabel">Add Category</h5>
+                <h5 class="modal-title">Add New Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{route('category.store')}}" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <label for="category_name" class="col-form-label pt-0">Category Name <sup class="text-size-20 top-1">*</sup></label>
-                        <input type="text" class="form-control" id="category_name" name="category_name" required>
-                        <small id="emailHelp" class="form-text text-muted">This is your main category</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="icon" class="col-form-label pt-0">Icon <sup class="text-size-20 top-1">*</sup></label>
-                        <input type="text" class="form-control" id="icon" name="icon" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="home_page" class="col-form-label pt-0">Home Page <sup class="text-size-20 top-1">*</sup></label>
-                        <select class="form-control" id="status" name="status">
-                          <option value="1">Yes</option>
-                          <option value="0">No</option>
-                        </select>
-                        <small id="emailHelp" class="form-text text-muted">If yes it will be show on your home page.</small>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="form-group mb-3">
+                    <label>Category Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="category_name" required placeholder="Enter category name">
+                    <small class="form-text text-muted">This is your main category</small>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Icon <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="icon" required placeholder="e.g. fa fa-home">
+                </div>
+                <div class="form-group mb-3">
+                    <label>Home Page <span class="text-danger">*</span></label>
+                    <select class="form-control" name="home_page" required>
+                        <option value="1">Yes</option>
+                        <option value="0" selected>No</option>
+                    </select>
+                    <small class="form-text text-muted">If yes, it will show on your home page.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="edit-form-body">
+                <!-- Edit form loads via AJAX -->
             </div>
         </div>
     </div>
 </div>
 
-  <!-- Category Edit Modal -->
-<!-- Category Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title h4" id="editModalLabel">Edit Category</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="editModalBody">
-              <!-- The form will be populated here by the JS -->
-          </div>
-      </div>
-  </div>
-</div>
+{{-- Scripts --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="text/javascript">
-      // For Edit category 
-      $('body').on('click', '.edit', function() {
-          let id = $(this).data('id');
-          $.get("category/" + id + "/edit", function(data) {
-              $('#editModalBody').html(data);
-          });
-      });
-  </script>
+<script>
+$(function () {
 
-  
-  
+    var table = $('.ytable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('category.index') }}",
+            type: "GET"
+        },
+        language: {
+            emptyTable: `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 0;">
+                    <img src="{{ asset('admin/images/no_data.svg') }}" alt="No Data" style="width:80px; height:80px; margin-bottom:15px;" />
+                    <div style="font-size:16px; color:#555;"><b>No data available</b><br/><p>Please add new entity regarding this table</p></div>
+                </div>
+            `
+        },
+        columns: [
+            { data: 'DT_RowIndex',    name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
+            { data: 'category_name',  name: 'category_name' },
+            { data: 'category_slug',  name: 'category_slug' },
+            { data: 'icon',           name: 'icon', orderable: false, searchable: false, width: '80px', className: 'text-center' },
+            { data: 'home_page',      name: 'home_page', className: 'text-center' },
+            { data: 'action',         name: 'action', orderable: false, searchable: false, width: '100px', className: 'text-center' }
+        ]
+    });
+
+    // Load edit form via AJAX
+    $('body').on('click', '.edit', function () {
+        let id = $(this).data('id');
+        $.get("{{ url('admin/category') }}/" + id + "/edit", function (data) {
+            $('#edit-form-body').html(data);
+        });
+    });
+
+    // Delete with SweetAlert2
+    $('body').on('click', '.delete', function () {
+        let id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Delete!',
+            cancelButtonText: 'No, Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#delete-form-' + id).submit();
+            }
+        });
+    });
+
+});
+</script>
+
 @endsection

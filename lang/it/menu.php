@@ -21,4 +21,5 @@ return [
     'teacher' => 'Insegnante',
     'leadership' => 'Leadership',
     'service' => 'Servizio',
+     'gallary'       => 'Galleria',
 ];

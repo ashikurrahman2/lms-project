@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\GallaryController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\FaqController;
@@ -89,6 +90,7 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
 
     // Front Page Management
     Route::resource('slider', SliderController::class);
+    Route::resource('gallary', GallaryController::class);
     Route::resource('feature', FeatureController::class);
     Route::resource('about', AboutController::class);
     Route::resource('student', StudentController::class);

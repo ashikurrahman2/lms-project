@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    protected array $supportedLocales = ['en', 'de', 'it', 'es', 'ru', 'hi', 'ar', 'bn']; // ✅ bn যোগ করা হয়েছে
+    protected array $supportedLocales = ['en', 'de', 'it', 'es', 'ru', 'hi', 'ar', 'bn']; 
 
     public function switch(Request $request, string $locale)
     {

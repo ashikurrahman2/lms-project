@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Service')
+@section('title', 'Gallery')
 
 @section('admin_content')
 
@@ -28,7 +28,7 @@
         <!-- Page Title -->
         <div class="page-title-head d-flex align-items-center">
             <div class="flex-grow-1">
-                <h4 class="page-main-title m-0">Service</h4>
+                <h4 class="page-main-title m-0">Gallery</h4>
             </div>
             <div class="text-end d-flex align-items-center gap-2">
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -36,7 +36,7 @@
                 </button>
                 <ol class="breadcrumb m-0 py-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Service</li>
+                    <li class="breadcrumb-item active">Gallery</li>
                 </ol>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>All Service List</h5>
+                        <h5>All Gallery List</h5>
                     </div>
                     <div class="card-body">
                         <div class="dt-responsive table-responsive">
@@ -55,18 +55,16 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Title</th>
-                                        <th>Description</th>
+                                        <th>Image</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{-- Call from AJAX data --}}
-                                </tbody>
+                                <tbody></tbody>
                                 <tfoot>
                                     <tr>
                                         <th>SL</th>
                                         <th>Title</th>
-                                        <th>Description</th>
+                                        <th>Image</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>
@@ -83,20 +81,20 @@
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form action="{{ route('service.store') }}" method="POST" class="modal-content">
+        <form action="{{ route('gallary.store') }}" method="POST" enctype="multipart/form-data" class="modal-content">
             @csrf
             <div class="modal-header">
-                <h5 class="modal-title">Add New Service</h5>
+                <h5 class="modal-title">Add New Image</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group mb-3">
-                    <label>Service Title <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="ser_title" required>
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="g_title" placeholder="Enter image title">
                 </div>
                 <div class="form-group mb-3">
-                    <label>Service Description <span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="ser_desc" rows="4" required></textarea>
+                    <label>Image <span class="text-danger">*</span></label>
+                    <input type="file" class="dropify" name="g_img" accept="image/*" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -111,7 +109,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Service</h5>
+                <h5 class="modal-title">Edit Gallery Image</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="edit-form-body">
@@ -134,7 +132,7 @@ $(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{{ route('service.index') }}",
+            url: "{{ route('gallary.index') }}",
             type: "GET"
         },
         language: {
@@ -147,8 +145,8 @@ $(function () {
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
-            { data: 'ser_title',   name: 'ser_title' },
-            { data: 'ser_desc',    name: 'ser_desc' },
+            { data: 'g_title',     name: 'g_title' },
+            { data: 'g_img',       name: 'g_img',  orderable: false, searchable: false, width: '80px' },
             { data: 'action',      name: 'action', orderable: false, searchable: false, width: '100px', className: 'text-center' }
         ]
     });
@@ -156,10 +154,9 @@ $(function () {
     // Load edit form via AJAX
     $('body').on('click', '.edit', function () {
         let id = $(this).data('id');
-        $.get("{{ url('admin/service') }}/" + id + "/edit", function (data) {
+        $.get("{{ url('admin/gallary') }}/" + id + "/edit", function (data) {
             $('#edit-form-body').html(data);
         });
-        $('#editModal').modal('show');
     });
 
     // Delete with SweetAlert2
