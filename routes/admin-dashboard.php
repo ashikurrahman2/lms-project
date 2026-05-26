@@ -13,6 +13,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategorieController;
 use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\SeoController;
@@ -91,6 +92,7 @@ Route::prefix('admin')->middleware(['auth:admin', 'role:super-admin|admin'])->gr
 
     // Front Page Management
     Route::resource('slider', SliderController::class);
+    Route::resource('course', CourseController::class);
     Route::resource('gallary', GallaryController::class);
     Route::resource('video', VideoController::class);
     Route::resource('feature', FeatureController::class);

@@ -153,6 +153,12 @@
                     <span class="menu-text">{{ __('menu.gallary') }}</span>
                 </a>
             </li>
+
+              <li class="side-nav-item">
+                <a href="{{ route('course.index') }}" class="side-nav-link">
+                    <span class="menu-text">Courses</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

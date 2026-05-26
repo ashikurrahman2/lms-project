@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Models\Course;
 use App\Models\About;
 use App\Models\Service;
 use App\Models\Teacher;
@@ -27,11 +28,22 @@ class FrontendController extends Controller
          $ats= About::all();
          $stds= Student::all();
          $trs= Teacher::all();
+            $courses = Course::all(); 
          $leaderships = Leadership::latest()->get();
          $svc=Service::all();
         // Home Page Category
         $home_category = Category::where('home_page',1)->orderBy('category_name', 'DESC')->get();
-        return view('frontend.pages.index', compact('slds', 'svc','leaderships','ats', 'trs','stds','home_category'));
+        return view('frontend.pages.index', compact('slds', 'courses', 'svc','leaderships','ats', 'trs','stds','home_category'));
+    }
+
+   public function courseDetails($slug) {
+        // স্লাগ অনুযায়ী নির্দিষ্ট কোর্সটি খুঁজে বের করা
+        $course = Course::where('slug', $slug)->firstOrFail();
+        
+        // রিলেটেড কোর্সের জন্য (অপশনাল)
+        $related_courses = Course::where('id', '!=', $course->id)->take(3)->get();
+
+        return view('frontend.pages.course_details', compact('course', 'related_courses'));
     }
     // About page
     public function About(){

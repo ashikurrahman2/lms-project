@@ -40,6 +40,7 @@ Route::group([], function () {
 
     // Homepage
     Route::get('/', [FrontendController::class, 'index'])->name('index');
+    Route::get('/course/{slug}', [FrontendController::class, 'courseDetails'])->name('course.details');
     Route::get('/about', [FrontendController::class, 'About'])->name('about');
     Route::get('/courses', [FrontendController::class, 'Courses'])->name('courses');
     Route::get('/category', [FrontendController::class, 'Category'])->name('category');

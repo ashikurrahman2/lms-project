@@ -181,26 +181,25 @@ html, body {
             <h6 class="section-title bg-white text-center text-primary px-3">
                 Courses
             </h6>
-
             <h1 class="mb-5">Popular Courses</h1>
         </div>
 
         <div class="row g-4 justify-content-center">
 
-            <!-- Course 1 -->
+            @foreach($courses as $course)
             <div class="col-lg-4 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.1s">
-
                 <div class="course-item bg-light w-100">
-
                     <div class="position-relative overflow-hidden">
-
-                        <img class="img-fluid"
-                             src="{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png')}}"
-                             alt="">
+                        
+                        <!-- Dynamic Image -->
+                        <img class="img-fluid" 
+                             src="{{ asset($course->image) }}" 
+                             alt="{{ $course->title }}"
+                             style="width: 100%; height: 250px; object-fit: cover;">
 
                         <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-
-                            <a href="#"
+                            <!-- Link with Slug -->
+                            <a href="{{ route('course.details', $course->slug) }}"
                                class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
                                style="border-radius: 30px 0 0 30px;">
                                 Read More
@@ -211,186 +210,51 @@ html, body {
                                style="border-radius: 0 30px 30px 0;">
                                 Join Now
                             </a>
-
                         </div>
                     </div>
 
                     <div class="text-center p-4 pb-0 course-content">
-
-                        <h3 class="mb-0">৳149.00</h3>
-
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small>(123)</small>
-                        </div>
-
-                        <h5 class="mb-4">Industrial Training</h5>
-
-                    </div>
-
-                    <div class="d-flex border-top bottom-content">
-
-                        <small class="flex-fill text-center border-end py-2">
-                            <i class="fa fa-user-tie text-primary me-2"></i>
-                            John Doe
-                        </small>
-
-                        <small class="flex-fill text-center border-end py-2">
-                            <i class="fa fa-clock text-primary me-2"></i>
-                            1.49 Hrs
-                        </small>
-
-                        <small class="flex-fill text-center py-2">
-                            <i class="fa fa-user text-primary me-2"></i>
-                            30 Students
-                        </small>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Course 2 -->
-            <div class="col-lg-4 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.3s">
-
-                <div class="course-item bg-light w-100">
-
-                    <div class="position-relative overflow-hidden">
-
-                        <img class="img-fluid"
-                             src="{{ asset('frontend/assets/img/course_1768888546_696f18e2748df.jpg')}}"
-                             alt="">
-
-                        <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-
-                            <a href="#"
-                               class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
-                               style="border-radius: 30px 0 0 30px;">
-                                Read More
-                            </a>
-
-                            <a href="#"
-                               class="flex-shrink-0 btn btn-sm btn-primary px-3"
-                               style="border-radius: 0 30px 30px 0;">
-                                Join Now
-                            </a>
-
-                        </div>
-                    </div>
-
-                    <div class="text-center p-4 pb-0 course-content">
-
-                        <h3 class="mb-0">৳149.00</h3>
+                        <!-- Dynamic Price -->
+                        <h3 class="mb-0">৳{{ number_format($course->price, 2) }}</h3>
 
                         <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small>(123)</small>
+                            <!-- Dynamic Star Rating -->
+                            @for ($i = 1; $i <= 5; $i++)
+                                <small class="fa fa-star {{ $i <= $course->rating ? 'text-primary' : 'text-muted' }}"></small>
+                            @endfor
+                            <small>({{ $course->review_count }})</small>
                         </div>
 
+                        <!-- Dynamic Title Link -->
                         <h5 class="mb-4">
-                            Machine Shop Practice Level -3
+                            <a href="{{ route('course.details', $course->slug) }}" class="text-dark text-decoration-none">
+                                {{ $course->title }}
+                            </a>
                         </h5>
-
                     </div>
 
                     <div class="d-flex border-top bottom-content">
-
+                        <!-- Dynamic Instructor -->
                         <small class="flex-fill text-center border-end py-2">
                             <i class="fa fa-user-tie text-primary me-2"></i>
-                            John Doe
+                            {{ $course->instructor_name }}
                         </small>
 
+                        <!-- Dynamic Duration -->
                         <small class="flex-fill text-center border-end py-2">
                             <i class="fa fa-clock text-primary me-2"></i>
-                            1.49 Hrs
+                            {{ $course->duration }}
                         </small>
 
+                        <!-- Dynamic Students -->
                         <small class="flex-fill text-center py-2">
                             <i class="fa fa-user text-primary me-2"></i>
-                            30 Students
+                            {{ $course->student_count }} Students
                         </small>
-
                     </div>
-
                 </div>
             </div>
-
-            <!-- Course 3 -->
-            <div class="col-lg-4 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.5s">
-
-                <div class="course-item bg-light w-100">
-
-                    <div class="position-relative overflow-hidden">
-
-                        <img class="img-fluid"
-                             src="{{ asset('frontend/assets/img/course_1768888083_696f171301a8c.png')}}"
-                             alt="">
-
-                        <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-
-                            <a href="#"
-                               class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
-                               style="border-radius: 30px 0 0 30px;">
-                                Read More
-                            </a>
-
-                            <a href="#"
-                               class="flex-shrink-0 btn btn-sm btn-primary px-3"
-                               style="border-radius: 0 30px 30px 0;">
-                                Join Now
-                            </a>
-
-                        </div>
-                    </div>
-
-                    <div class="text-center p-4 pb-0 course-content">
-
-                        <h3 class="mb-0">৳149.00</h3>
-
-                        <div class="mb-3">
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small class="fa fa-star text-primary"></small>
-                            <small>(123)</small>
-                        </div>
-
-                        <h5 class="mb-4">
-                            CNC Machine Programming
-                        </h5>
-
-                    </div>
-
-                    <div class="d-flex border-top bottom-content">
-
-                        <small class="flex-fill text-center border-end py-2">
-                            <i class="fa fa-user-tie text-primary me-2"></i>
-                            John Doe
-                        </small>
-
-                        <small class="flex-fill text-center border-end py-2">
-                            <i class="fa fa-clock text-primary me-2"></i>
-                            1.49 Hrs
-                        </small>
-
-                        <small class="flex-fill text-center py-2">
-                            <i class="fa fa-user text-primary me-2"></i>
-                            30 Students
-                        </small>
-
-                    </div>
-
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </div>
