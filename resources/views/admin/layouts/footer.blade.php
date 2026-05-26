@@ -13,14 +13,15 @@
 
 
     <!-- Footer Start -->
+    <div class="wrapper">
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6 text-center text-md-start">
-                                <script>
+                                {{-- <script>
                                     document.write(new Date().getFullYear())
-                                </script>
-                                © Paces - By <span class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Coderthemes</span>
+                                </script> --}}
+                               {{ date('Y') }} © LearnStack - By <span class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Ashikur Rahman</span>
                             </div>
                             <div class="col-md-6">
                                 <div class="d-none d-md-flex justify-content-end gap-3">
@@ -33,3 +34,14 @@
                     </div>
                 </footer>
                 <!-- end Footer -->
+                  <div class="offcanvas-footer border-top p-3 text-center">
+                <div class="row justify-content-end">
+                    <div class="col-6">
+                        <a href="#" class="btn btn-success fw-semibold py-2 w-100" target="_blank"><i class="ti ti-basket me-2 fs-md"></i> Buy Now</a>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger fw-semibold py-2 w-100" id="reset-layout"><i class="ti ti-refresh me-2 fs-md"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+    </div>

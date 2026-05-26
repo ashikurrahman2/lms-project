@@ -15,9 +15,8 @@
         const stage = document.getElementById('galleryStage');
         const cards = stage.querySelectorAll('.gallery-card');
         const N = cards.length;
-        let current = 0; // index 0 থেকে শুরু, প্রথম card center-এ
+        let current = 0;
 
-        // pos=0 → center, pos=1 → right, pos=2 → far-right, pos=3 → left
         const configs = [
             { tx: -100, ty: -150, tz: 80,  scale: 1.00, opacity: 1.00, rotY:   0, zIndex: 3 }, // center
             { tx:  110, ty: -150, tz: 40,  scale: 0.78, opacity: 0.65, rotY:  18, zIndex: 1 }, // right
@@ -43,13 +42,14 @@
         cards.forEach(function (card, i) {
             card.addEventListener('click', function () {
                 if (i === current) {
-                    var img  = card.querySelector('.card-img-wrap img');
-                    var name = card.querySelector('.card-name').textContent;
-                    var role = card.querySelector('.card-role').textContent;
-                    document.getElementById('modalImg').src = img.src;
-                    document.getElementById('modalImg').alt = img.alt;
-                    document.getElementById('modalName').textContent = name;
-                    document.getElementById('modalRole').textContent = role;
+                    var img    = card.querySelector('.card-img-wrap img');
+                    var nameEl = card.querySelector('.card-name');
+                    var roleEl = card.querySelector('.card-role');
+
+                    document.getElementById('modalImg').src          = img ? img.src : '';
+                    document.getElementById('modalImg').alt          = img ? img.alt : '';
+                    document.getElementById('modalName').textContent = nameEl ? nameEl.textContent : '';
+                    document.getElementById('modalRole').textContent = roleEl ? roleEl.textContent : '';
                     document.getElementById('teacherModal').classList.add('active');
                     document.body.style.overflow = 'hidden';
                 } else {
@@ -86,6 +86,7 @@
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeModal();
         });
+
     })();
 </script>
 

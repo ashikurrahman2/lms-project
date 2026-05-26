@@ -3,7 +3,7 @@
 <head>
     <title>@yield('title')</title>
     <!-- [Meta] -->
-    @include('admin.layouts.meta')
+    {{-- @include('admin.layouts.meta') --}}
     <!-- [style] -->
     @include('admin.layouts.style')
 
@@ -15,11 +15,7 @@
     <div>
         <div>
             <!-- [ Pre-loader ] start -->
-            <div class="loader-bg">
-                <div class="pc-loader">
-                    <div class="loader-fill"></div>
-                </div>
-            </div><!-- [ Pre-loader ] End -->
+    
             @guest
             @else
 
@@ -40,7 +36,7 @@
             <!-- [ Footer Content ] end -->
             @endguest
             <!-- [ color setting Start ] end -->
-                @include('admin.layouts.colormode')
+                {{-- @include('admin.layouts.colormode') --}}
             <!-- [Page Specific JS] start -->
                 @include('admin.layouts.script')
             <!-- [Page Specific JS] end -->

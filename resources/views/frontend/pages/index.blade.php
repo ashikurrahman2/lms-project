@@ -506,6 +506,10 @@ html, body {
 
 
     {{-- Our Training Gallery Start --}}
+@php
+    $galleries = \App\Models\Gallary::latest()->take(4)->get();
+@endphp
+
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -517,44 +521,26 @@ html, body {
         <div class="gallery-wrap">
             <div class="gallery-stage" id="galleryStage">
 
-                <div class="gallery-card" data-index="0">
-                    <div class="card-img-wrap">
-                        <img src="{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png') }}" alt="MD. SHOBUJ AHMED">
+                @forelse ($galleries as $index => $gallery)
+                    <div class="gallery-card"
+                        data-index="{{ $index }}"
+                        data-src="{{ asset($gallery->g_img) }}"
+                        data-name="{{ $gallery->g_title ?? 'Gallery Image' }}"
+                        data-role="">
+                        <div class="card-img-wrap">
+                            <img src="{{ asset($gallery->g_img) }}" alt="{{ $gallery->g_title ?? 'Gallery Image' }}">
+                        </div>
+                        <div class="card-info">
+                            @if ($gallery->g_title)
+                                <h5 class="card-name">{{ $gallery->g_title }}</h5>
+                            @endif
+                        </div>
                     </div>
-                    <div class="card-info">
-                        <h5 class="card-name">MD. SHOBUJ AHMED</h5>
+                @empty
+                    <div class="text-center py-5 w-100">
+                        <p class="text-muted">No images found.</p>
                     </div>
-                </div>
-
-                <div class="gallery-card" data-index="1">
-                    <div class="card-img-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768881663_696efdffec162.jpg') }}" alt="Raiyan Rahman">
-                    </div>
-                    <div class="card-info">
-                        <h5 class="card-name">Raiyan Rahman</h5>
-                
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-index="2">
-                    <div class="card-img-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768896393_696f37899525d.jpg') }}" alt="Yousuf Khan Onik">
-                    </div>
-                    <div class="card-info">
-                        <h5 class="card-name">Yousuf Khan Onik</h5>
-                
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-index="3">
-                    <div class="card-img-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768881578_696efdaabcaa9.jpg') }}" alt="Shariyar Ahmed Rifat">
-                    </div>
-                    <div class="card-info">
-                        <h5 class="card-name">Shariyar Ahmed Rifat</h5>
-                  
-                    </div>
-                </div>
+                @endforelse
 
             </div>
 
@@ -568,6 +554,7 @@ html, body {
                     <i class="fa fa-arrow-right"></i>
                 </button>
             </div>
+
             <!-- View More Button -->
             <div class="text-center mt-4">
                 <a href="{{ route('gal') }}" class="btn btn-primary py-2 px-4">
@@ -590,70 +577,40 @@ html, body {
         <div class="modal-body-info">
             <h4 id="modalName"></h4>
             <p id="modalRole"></p>
-            <div class="modal-socials">
+            {{-- <div class="modal-socials">
                 <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
 
 <script>
-    // গ্যালারি কার্ডের ডেটা
-const galleryData = [
-    {
-        img: "{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png') }}",
-        name: "MD. SHOBUJ AHMED",
-        role: "Instructor"
-    },
-    {
-        img: "{{ asset('frontend/assets/img/gallery_1768881663_696efdffec162.jpg') }}",
-        name: "Raiyan Rahman",
-        role: "Instructor"
-    },
-    {
-        img: "{{ asset('frontend/assets/img/gallery_1768896393_696f37899525d.jpg') }}",
-        name: "Yousuf Khan Onik",
-        role: "Instructor"
-    },
-    {
-        img: "{{ asset('frontend/assets/img/gallery_1768881578_696efdaabcaa9.jpg') }}",
-        name: "Shariyar Ahmed Rifat",
-        role: "Instructor"
-    }
-];
-
-// Modal open/close logic
-document.querySelectorAll('.gallery-card').forEach((card, index) => {
-    card.querySelector('.card-img-wrap').addEventListener('click', function () {
-        const data = galleryData[index];
-        document.getElementById('modalImg').src = data.img;
-        document.getElementById('modalImg').alt = data.name;
-        document.getElementById('modalName').textContent = data.name;
-        document.getElementById('modalRole').textContent = data.role;
-        document.getElementById('teacherModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Modal open — data attribute থেকে সরাসরি নেওয়া
+    document.querySelectorAll('.gallery-card').forEach(function (card) {
+        card.querySelector('.card-img-wrap').addEventListener('click', function () {
+            document.getElementById('modalImg').src          = card.dataset.src;
+            document.getElementById('modalImg').alt          = card.dataset.name;
+            document.getElementById('modalName').textContent = card.dataset.name;
+            document.getElementById('modalRole').textContent = card.dataset.role;
+            document.getElementById('teacherModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
     });
-});
 
-// Close button
-document.getElementById('modalClose').addEventListener('click', closeModal);
+    function closeModal() {
+        document.getElementById('teacherModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
 
-// Overlay click এ বন্ধ হবে
-document.getElementById('teacherModal').addEventListener('click', function (e) {
-    if (e.target === this) closeModal();
-});
-
-// ESC key এ বন্ধ হবে
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeModal();
-});
-
-function closeModal() {
-    document.getElementById('teacherModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('teacherModal').addEventListener('click', function (e) {
+        if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+    });
 </script>
 <style>
     .teacher-modal-overlay {
@@ -714,6 +671,10 @@ function closeModal() {
 <!-- Leadership End -->
 
 {{-- 3D Video Training Gallery Start --}}
+@php
+    $videos = \App\Models\Video::latest()->get();
+@endphp
+
 <section class="vg3d-section">
     <div class="container">
 
@@ -725,71 +686,28 @@ function closeModal() {
         <div class="vg3d-stage">
             <div class="vg3d-track" id="vg3dTrack">
 
-                <div class="vg3d-card" data-index="0"
-                    data-title="CAD/CAM Design Fundamentals"
-                    data-sub="Module 1 · 42 min"
-                    data-src="{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png') }}">
-                    <div class="vg3d-thumb-wrap">
-                        <img src="{{ asset('frontend/assets/img/course_1771728981_699a7055ce538.png') }}" alt="CAD/CAM Design Fundamentals" loading="lazy">
+                @forelse ($videos as $index => $video)
+                    <div class="vg3d-card"
+                        data-index="{{ $index }}"
+                        data-src="{{ asset($video->video_file) }}">
+                        <div class="vg3d-thumb-wrap">
+                            <video src="{{ asset($video->video_file) }}"
+                                   style="width:100%; height:100%; object-fit:cover;"
+                                   preload="metadata">
+                            </video>
+                        </div>
+                        <div class="vg3d-overlay">
+                            <div class="vg3d-play-ring"><i class="fa fa-play"></i></div>
+                        </div>
+                        <div class="vg3d-card-info">
+                            <p>Video {{ $index + 1 }}</p>
+                        </div>
                     </div>
-                    <div class="vg3d-overlay">
-                        <div class="vg3d-play-ring"><i class="fa fa-play"></i></div>
+                @empty
+                    <div class="text-center py-5 w-100">
+                        <p class="text-muted">No videos found.</p>
                     </div>
-                    <div class="vg3d-card-info">
-                        <p>CAD/CAM Design Fundamentals</p>
-                        <span>Module 1 · 42 min</span>
-                    </div>
-                </div>
-
-                <div class="vg3d-card" data-index="1"
-                    data-title="Tool & Technology Basics"
-                    data-sub="Module 2 · 35 min"
-                    data-src="{{ asset('frontend/assets/img/gallery_1768881663_696efdffec162.jpg') }}">
-                    <div class="vg3d-thumb-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768881663_696efdffec162.jpg') }}" alt="Tool & Technology Basics" loading="lazy">
-                    </div>
-                    <div class="vg3d-overlay">
-                        <div class="vg3d-play-ring"><i class="fa fa-play"></i></div>
-                    </div>
-                    <div class="vg3d-card-info">
-                        <p>Tool & Technology Basics</p>
-                        <span>Module 2 · 35 min</span>
-                    </div>
-                </div>
-
-                <div class="vg3d-card" data-index="2"
-                    data-title="CAD Design Workshop"
-                    data-sub="Module 3 · 58 min"
-                    data-src="{{ asset('frontend/assets/img/gallery_1768896393_696f37899525d.jpg') }}">
-                    <div class="vg3d-thumb-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768896393_696f37899525d.jpg') }}" alt="CAD Design Workshop" loading="lazy">
-                    </div>
-                    <div class="vg3d-overlay">
-                        <div class="vg3d-play-ring"><i class="fa fa-play"></i></div>
-                    </div>
-                    <div class="vg3d-card-info">
-                        <p>CAD Design Workshop</p>
-                        <span>Module 3 · 58 min</span>
-                    </div>
-                </div>
-
-                <div class="vg3d-card" data-index="3"
-                    data-title="Advanced CAD Specialist Training"
-                    data-sub="Module 4 · 1h 12min"
-                    data-src="{{ asset('frontend/assets/img/gallery_1768881578_696efdaabcaa9.jpg') }}">
-                    <div class="vg3d-thumb-wrap">
-                        <img src="{{ asset('frontend/assets/img/gallery_1768881578_696efdaabcaa9.jpg') }}" alt="Advanced CAD Specialist Training" loading="lazy">
-                    </div>
-                    <div class="vg3d-overlay">
-                        <div class="vg3d-play-ring"><i class="fa fa-play"></i></div>
-                    </div>
-                    <div class="vg3d-card-info">
-                        <p>Advanced CAD Specialist Training</p>
-                        <span>Module 4 · 1h 12min</span>
-                    </div>
-                </div>
-
-                {{-- Add more cards here following the same pattern --}}
+                @endforelse
 
             </div>
         </div>
@@ -809,22 +727,20 @@ function closeModal() {
 </section>
 
 {{-- ===================== MODAL ===================== --}}
-<div id="vg3dModal" class="vg3d-modal-bg" role="dialog" aria-modal="true" aria-label="Video preview">
+<div id="vg3dModal" class="vg3d-modal-bg"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Video preview"
+    style="display:none; opacity:0; visibility:hidden;">
     <div class="vg3d-modal-box">
         <div class="vg3d-modal-top">
-            <img id="vg3dModalThumb" src="" alt="" class="vg3d-modal-thumb">
-            <div class="vg3d-modal-play-center">
-                <div class="vg3d-modal-play-big">
-                    <i class="fa fa-play"></i>
-                </div>
-            </div>
+            <video id="vg3dModalVideo" src="" class="vg3d-modal-thumb" controls style="width:100%;"></video>
             <button class="vg3d-modal-close" id="vg3dModalClose" aria-label="Close modal">
                 <i class="fa fa-times"></i>
             </button>
         </div>
         <div class="vg3d-modal-body">
             <h4 id="vg3dModalTitle"></h4>
-            <p id="vg3dModalSub"></p>
             <div class="vg3d-modal-actions">
                 <button class="vg3d-act-btn"><i class="fa fa-share-alt"></i> Share</button>
                 <button class="vg3d-act-btn"><i class="fa fa-download"></i> Download</button>
@@ -833,6 +749,7 @@ function closeModal() {
         </div>
     </div>
 </div>
+
 {{-- 3D Video Training Gallery End --}}
 
 
@@ -1171,9 +1088,8 @@ function closeModal() {
     const prevBtn  = document.getElementById('vg3dPrev');
     const nextBtn  = document.getElementById('vg3dNext');
     const modal    = document.getElementById('vg3dModal');
-    const mThumb   = document.getElementById('vg3dModalThumb');
+    const mVideo   = document.getElementById('vg3dModalVideo');
     const mTitle   = document.getElementById('vg3dModalTitle');
-    const mSub     = document.getElementById('vg3dModalSub');
     const mClose   = document.getElementById('vg3dModalClose');
 
     const n = cards.length;
@@ -1195,18 +1111,18 @@ function closeModal() {
             let offset = ((i - current) % n + n) % n;
             if (offset > n / 2) offset -= n;
 
-            const tx  = offset * 210;
-            const tz  = -Math.abs(offset) * 170;
-            const ry  = -offset * 28;
-            const sc  = Math.max(offset === 0 ? 1 : 0.82 - Math.abs(offset) * 0.06, 0.6);
-            const op  = Math.max(offset === 0 ? 1 : 0.5 - Math.abs(offset) * 0.08, 0);
-            const zi  = 10 - Math.abs(offset) * 2;
-            const sh  = offset === 0 ? '0 24px 60px rgba(0,0,0,0.6)' : 'none';
+            const tx = offset * 210;
+            const tz = -Math.abs(offset) * 170;
+            const ry = -offset * 28;
+            const sc = Math.max(offset === 0 ? 1 : 0.82 - Math.abs(offset) * 0.06, 0.6);
+            const op = Math.max(offset === 0 ? 1 : 0.5 - Math.abs(offset) * 0.08, 0);
+            const zi = 10 - Math.abs(offset) * 2;
+            const sh = offset === 0 ? '0 24px 60px rgba(0,0,0,0.6)' : 'none';
 
-            c.style.transform  = `translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
-            c.style.opacity    = op;
-            c.style.zIndex     = zi;
-            c.style.boxShadow  = sh;
+            c.style.transform = `translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
+            c.style.opacity   = op;
+            c.style.zIndex    = zi;
+            c.style.boxShadow = sh;
             c.classList.toggle('vg3d-active', offset === 0);
         });
 
@@ -1215,16 +1131,29 @@ function closeModal() {
 
     /* --- Open Modal --- */
     function openModal(card) {
-        mThumb.src             = card.dataset.src;
-        mThumb.alt             = card.dataset.title;
-        mTitle.textContent     = card.dataset.title;
-        mSub.textContent       = card.dataset.sub;
-        modal.classList.add('vg3d-modal-open');
+        mVideo.src         = card.dataset.src;
+        mTitle.textContent = card.dataset.title || ('Video ' + (parseInt(card.dataset.index) + 1));
+
+        modal.style.display       = 'flex';
+        modal.style.opacity       = '1';
+        modal.style.visibility    = 'visible';
+        modal.style.pointerEvents = 'all';
+
         document.body.style.overflow = 'hidden';
+        mVideo.load();
+        mVideo.play().catch(() => {});
     }
 
+    /* --- Close Modal --- */
     function closeModal() {
-        modal.classList.remove('vg3d-modal-open');
+        mVideo.pause();
+        mVideo.src = '';
+
+        modal.style.display       = 'none';
+        modal.style.opacity       = '0';
+        modal.style.visibility    = 'hidden';
+        modal.style.pointerEvents = 'none';
+
         document.body.style.overflow = '';
     }
 
@@ -1262,60 +1191,12 @@ function closeModal() {
         }
     });
 
-    /* --- Auto-play (optional — remove if not needed) --- */
+    /* --- Auto-play (optional) --- */
     // setInterval(() => { current = (current + 1) % n; render(); }, 4000);
 
     render();
 })();
 </script>
-
-
-
-    <!-- Testimonial Start -->
-    {{-- <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="text-center">
-                <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
-                <h1 class="mb-5">Our Students Say!</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel position-relative">
-                <div class="testimonial-item text-center">
-                    <img class="border rounded-circle p-2 mx-auto mb-3" src="img/testimonial-1.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">Client Name</h5>
-                    <p>Profession</p>
-                    <div class="testimonial-text bg-light text-center p-4">
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <img class="border rounded-circle p-2 mx-auto mb-3" src="img/testimonial-2.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">Client Name</h5>
-                    <p>Profession</p>
-                    <div class="testimonial-text bg-light text-center p-4">
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <img class="border rounded-circle p-2 mx-auto mb-3" src="img/testimonial-3.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">Client Name</h5>
-                    <p>Profession</p>
-                    <div class="testimonial-text bg-light text-center p-4">
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <img class="border rounded-circle p-2 mx-auto mb-3" src="img/testimonial-4.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">Client Name</h5>
-                    <p>Profession</p>
-                    <div class="testimonial-text bg-light text-center p-4">
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Testimonial End -->
-
 
 <!-- END MAIN CONTENT -->
 <!-- START FOOTER -->

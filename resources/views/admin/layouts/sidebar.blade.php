@@ -159,22 +159,39 @@
 
           
                 <li class="side-nav-title mt-2" data-lang="custom-pages">Operational Pages</li>
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#pages" aria-expanded="false" aria-controls="pages" class="side-nav-link">
-                        <span class="menu-icon"><i class="ti ti-files"></i></span>
-                        <span class="menu-text" data-lang="pages">Categories</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="pages">
-                        <ul class="sub-menu">
-                            <li class="side-nav-item">
-                                <a href="{{ route('category.index') }}" class="side-nav-link">
-                                    <span class="menu-text" data-lang="pages-about-us">All Categories</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+               <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories" class="side-nav-link">
+        <span class="menu-icon"><i class="ti ti-files"></i></span>
+        <span class="menu-text" data-lang="pages">Categories</span>
+        <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="categories">
+        <ul class="sub-menu">
+            <li class="side-nav-item">
+                <a href="{{ route('category.index') }}" class="side-nav-link">
+                    <span class="menu-text" data-lang="pages-about-us">All Categories</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#videoGallery" aria-expanded="false" aria-controls="videoGallery" class="side-nav-link">
+        <span class="menu-icon"><i class="ti ti-video"></i></span>
+        <span class="menu-text" data-lang="pages">Video Gallery</span>
+        <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="videoGallery">
+        <ul class="sub-menu">
+            <li class="side-nav-item">
+                <a href="{{ route('video.index') }}" class="side-nav-link">
+                    <span class="menu-text" data-lang="pages-about-us">All Video Gallery</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
                 @endrole
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#plugins" aria-expanded="false" aria-controls="plugins" class="side-nav-link">
